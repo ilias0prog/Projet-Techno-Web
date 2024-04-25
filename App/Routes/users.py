@@ -22,7 +22,7 @@ def login_page(request: Request):
 
 @router.post("/login")
 def login_route(username: Annotated[str, Form()], password: Annotated[str, Form()]):
-        user = service.get_user_by_username(username)
+        user = userService.get_user_by_username(username)
         if user is not None:
                 if user.blocked:
                         return HTTPException(
@@ -33,3 +33,13 @@ def login_route(username: Annotated[str, Form()], password: Annotated[str, Form(
             return HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="incorrect username or password.")
+            
+            
+@router.get("logout")
+def lougout_page():
+        response = RedirectResponse(url="/users/login", status_code=302)
+        response.delete_cookie(
+                key = login_manager.cookie_name,
+                httponly=True)
+        return response
+
