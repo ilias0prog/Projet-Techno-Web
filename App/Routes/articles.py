@@ -12,3 +12,4 @@ from App.Services import articles as articleService
 
 templates = Jinja2Templates(directory="\Templates")
 router = APIRouter(prefix="/articles")
+
