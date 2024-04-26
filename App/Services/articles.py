@@ -20,6 +20,23 @@ def get_all_articles():
                 note        = article.note)
             for article in articles_data]
         
+        
+def get_all_articles_by_theme(theme :str):
+    if theme in ("sport", "culture", "politics", "economics", "health", "environment", "social", "technology", "international"):
+        with Session() as session:
+            statement = select(Article).where(Article.theme == theme)
+            articles_data = session.scalars(statement).all()
+            return [
+                Article(
+                    id          = article.id,
+                    author_id   = article.author_id,
+                    title       = article.title,
+                    date        = article.date,
+                    content     = article.content,
+                    theme       = article.theme,
+                    note        = article.note)
+                for article in articles_data]
+        
 
 def get_article_by_id(article_id: str) -> ArticleSchema | None:
     """
@@ -75,4 +92,5 @@ def update_article(article_id: str, article: ArticleSchema):
         article.date = article.date
         article.content = article.content
         session.commit()
+
 

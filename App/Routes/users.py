@@ -48,7 +48,11 @@ def lougout_route():
 
 @router.get("/me")
 def current_user_page(request : Request, user: UserSchema = Depends(login_manager)):
-    return templates.TemplateResponse("user.html", context={"request": request,"user": user})
+    return templates.TemplateResponse("my_profile.html", context={"request": request,"user": user})
+
+@router.get("/thisuser")
+def this_user_page(request : Request, this_user : UserSchema):
+    return templates.TemplateResponse("this_user.html", context={"request": request, "this_user": this_user})
 
 @router.get("/register")
 def register_page(request: Request):
@@ -61,5 +65,3 @@ def register_route( username:Annotated[str, Form()], firstname: Annotated[str, F
     response = RedirectResponse(url="/books/all", status_code=302)
     return  response
 
-
-# ...
