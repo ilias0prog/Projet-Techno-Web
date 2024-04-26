@@ -9,4 +9,4 @@ class UserSchema(BaseModel):
     email :     str
     password :  str
     interests : List[str]
-    note : int = Field(2.5, ge=0, le=5)
+    admin :     bool = False

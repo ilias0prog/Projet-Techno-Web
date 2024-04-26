@@ -15,7 +15,7 @@ Session = sessionmaker(engine)
 class Base(DeclarativeBase):
     pass
 
-from App.Models.articles import Book 
+from App.Models.articles import Article
 from App.Models.users import User
 
 
