@@ -5,8 +5,7 @@ from uuid import uuid4
 
 
 engine = create_engine(
-    #"sqlite:///data/database.sqlite", 
-    "sqlite:///TP5\Librairie\data\database.sqlite", 
+    "sqlite:///Data\database.sqlite", 
     echo=True
 )
 
@@ -16,7 +15,9 @@ class Base(DeclarativeBase):
     pass
 
 from App.Models.articles import Article
-from App.Models.users import User
+import App.Models.articles as ArticleModel
+#from App.Models.users import User
+import App.Models.users as UserModel
 
 
 
@@ -146,4 +147,3 @@ def fill_users_db():
     blocked=user_data["blocked"],)
             session.add(user)
         session.commit()
-

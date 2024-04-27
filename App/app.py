@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import FastAPI,Request,status
 from App.Routes.articles import router as article_router
 from App.Routes.users import router as user_router
+from App.database import create_database, clear_database
 
 
 
@@ -19,7 +20,7 @@ app.include_router(user_router)
 def route(request: Request):
     return RedirectResponse("./users/login", status_code= status.HTTP_303_SEE_OTHER)
 
-app.mount("/static", StaticFiles(directory="TP5/Librairie/static"), name="static")
+app.mount("/static", StaticFiles(directory="Static"), name="static")
 
 @app.on_event('startup')
 def on_startup():
