@@ -13,8 +13,8 @@ Session = sessionmaker(engine)
 
 class Base(DeclarativeBase):
     pass
-
 from app.Models.usersandarticles import User
+
 
 
 
