@@ -1,0 +1,335 @@
+@import url('cabinet-grotesk.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: CabinetGrotesk-Medium;
+    color: #19191c;
+    background-color: #e6e6e3;
+}
+
+main {
+    size: auto;
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    /*
+    background: url(bookstore2.jpg);
+    background-size: cover;
+    background-position: center;
+    */
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+h1 {
+    font-family: CabinetGrotesk-Black;
+    padding-top: 10vh;
+    padding-bottom: 5vh;
+    text-align: center;
+    font-size: 4em;
+}
+
+/*Home page*/
+.Homepage {}
+
+/*
+.navbar{
+    background-color:brown;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    height: 12vh;
+    line-height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+}*/
+
+.hometitle {
+    position: relative;
+    margin-left: auto;
+    right: 20%;
+    height: 80px;
+    padding: 0;
+    padding-top: 10px;
+}
+
+.navbar {
+    position: absolute;
+    top: 10px;
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    height: 120px;
+    width: 100vw;
+    box-sizing: border-box;
+    box-shadow: 0 1em 1.25em rgba(0, 0, 0, .03);
+}
+
+.navbar a {
+    font-family: CabinetGrotesk-Extrabold;
+}
+
+.navbar .logo {
+    font-size: 2em;
+    font-family: CabinetGrotesk-Black;
+}
+
+.navbar .home_links ul {
+    display: flex;
+}
+
+.navbar .home_links ul li {
+    margin: 0 24px;
+}
+
+.navbar .home_links ul li.active a {
+    color: #3d3d5c;
+    font-family: CabinetGrotesk-Black;
+}
+
+#user_profile_btn {
+    font-size: 2em;
+}
+
+.table_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 200px;
+    margin: 0 10vw;
+}
+
+#users.table_container {
+    padding-top: 50px;
+}
+
+.my_profile_container{
+    width: 50vw;
+    text-align: center !important;
+}
+
+table {
+    width: 100%;
+    justify-content: center;
+    border-spacing: 20px;
+}
+
+table th {
+    min-width: 120px;
+    box-shadow: 0 0 1em 0.5em rgba(0, 0, 0, .03);
+    border: none;
+    border-bottom: #19191c;
+    padding: 15px;
+    background-color: rgb(61, 61, 92, 0.02);
+    border: solid rgb(61, 61, 92, 0.05) 0.1px;
+}
+
+table td {
+    padding: 15px;
+}
+
+table th,
+td {
+    text-align: center;
+    align-items: center;
+    background-color: #e6e6e3;
+}
+
+.book_name_cells {
+    font-family: CabinetGrotesk-Bold;
+
+}
+
+.form_container {
+    display: grid;
+    justify-content: center;
+    /* Centrage horizontal */
+    align-items: center;
+    /* Centrage vertical */
+    width: 100%;
+}
+
+form {
+    height: 50vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 3fr;
+    height: 5vh;
+    padding: 2vh;
+    margin-top: 10px;
+}
+
+#register_form {
+    display: flex;
+    position: relative;
+    margin-top: 50px;
+    height: 500px;
+}
+
+.confirm_form_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm_form_container {
+    font-family: CabinetGrotesk-Bold;
+    display: flex;
+    height: 36px;
+    width: 48px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    height: 60px;
+    width: 80px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+}
+
+.form_button {
+    font-family: CabinetGrotesk-ExtraBold;
+    font-size: 1.5em;
+    height: 36px;
+    width: 48px;
+    border: solid #19191c 2px;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    height: 50px;
+    width: 70px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 1em rgba(0, 0, 0, .1);
+}
+
+#confirm_edit_button,
+#confirm_delete_button,
+#confirm_register_button,
+#confirm_logout {
+    margin-top: 30px;
+    height: 80px;
+    width: 100px;
+}
+
+#confirm_logout {
+    grid-template-columns: 1fr;
+    justify-content: center;
+}
+
+#confirm_register_button {
+    width: 100px;
+    min-height: 40px;
+}
+
+.form_button:hover {
+    transform: scale(1.05);
+    border-radius: 7px;
+    box-shadow: 0 0 1.1em rgba(0, 0, 0, .2);
+}
+
+.back_button {
+    font-family: CabinetGrotesk-Bold;
+    font-size: 1em;
+    height: 36px;
+    width: 48px;
+    border: solid #19191c 2px;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    height: 50px;
+    width: 70px;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 8px;
+    transition: all 0.1 linear;
+}
+
+label {
+    margin: 0;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+input {
+    margin-top: 10px;
+    width: 500px;
+    height: inherit;
+    border: solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    /*box-shadow: 0 0.5em 2em hsl(0deg 0% 0% / 0.1);*/
+}
+
+
+.button_link {}
+
+#add_button {
+    padding: 8px;
+    font-size: 2em;
+    transform: translateX(-20px);
+}
+
+.add_button_container {
+    display: flex;
+    justify-content: center;
+}
+
+#edit_button,
+#delete_button,
+#block_button,
+#unblock_button {
+    font-size: 1.5em;
+}
+
+.nb_books {
+    display: flex;
+    width: 100vw;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-30px);
+    background-color: #19191c;
+    color: #e6e6e3;
+    font-family: CabinetGrotesk-Black;
+    margin: 10px 20px 0;
+}
+
+.confirm_block,
+.confirm_unblock {}
+
+
+.register_button {
+    border: none;
+    border-bottom: solid #19191c 1px;
+}
