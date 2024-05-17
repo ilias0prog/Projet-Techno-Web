@@ -5,7 +5,7 @@ from uuid import uuid4
 
 
 engine = create_engine(
-    "sqlite:///Projet_techno-web\Data\database.sqlite", 
+    "sqlite:///Data\database.sqlite", 
     echo=True
 )
 
@@ -13,12 +13,13 @@ Session = sessionmaker(engine)
 
 class Base(DeclarativeBase):
     pass
-from app.Models.usersandarticles import User
+
 
 
 
 
 def create_database():
+    from app.Models.usersandarticles import User
     Base.metadata.create_all(engine)
 
 def clear_database():
@@ -28,6 +29,8 @@ def delete_database():
     Base.metadata.drop_all(engine)
 
 def fill_users_db():    
+    from app.Models.usersandarticles import User
+
     users_data = [
     {
         "id": str(uuid4()),
