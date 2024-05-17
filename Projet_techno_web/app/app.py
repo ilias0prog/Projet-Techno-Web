@@ -20,7 +20,7 @@ app.include_router(user_router)
 def route(request: Request):
     return RedirectResponse("./users/login", status_code= status.HTTP_303_SEE_OTHER)
 
-app.mount("/static", StaticFiles(directory="Projet_techno_web/Static"), name="static")
+app.mount("/static", StaticFiles(directory="Projet_techno_web/static"), name="static")
 
 @app.on_event('startup')
 def on_startup():
