@@ -5,7 +5,7 @@ from uuid import uuid4
 
 
 engine = create_engine(
-    "sqlite:///Data\database.sqlite", 
+    "sqlite:///Projet_techno_web\Data\database.sqlite", 
     echo=True
 )
 
@@ -14,6 +14,7 @@ Session = sessionmaker(engine)
 class Base(DeclarativeBase):
     pass
 
+from app.Models.usersandarticles import User
 
 
 
