@@ -13,6 +13,7 @@ templates = Jinja2Templates(directory="Librairie\Templates")
 app = FastAPI(title="Twitter")
 
 app.include_router(user_router)
+app.include_router(article_router)
 
 @app.get("/")
 def route(request: Request):
@@ -23,8 +24,8 @@ app.mount("/static", StaticFiles(directory="Librairie/static"), name="static")
 @app.on_event('startup')
 def on_startup():
     print("Server started.")
-    delete_database()
-    
+    create_database()
+   
 
 
 def on_shutdown():

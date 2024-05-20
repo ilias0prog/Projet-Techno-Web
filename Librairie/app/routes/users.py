@@ -21,11 +21,6 @@ def login_route( username: Annotated[str, Form()], password: Annotated[str,Form(
     
     user = service.get_user_by_username(username)
     if user is not None:
-        if user.blocked:
-            return HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="User is blocked."
-            )
         if user.password != password:
             return HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -83,26 +78,8 @@ def  register_action( username:Annotated[str, Form()], firstname: Annotated[str,
 def admin_form(request: Request):
     return templates.TemplateResponse("/admin.html", context={"request": request, "users": service.get_all_users()})
 
-@router.get("/block/{username}")
-def block_form(request: Request, username : str):
-    service.get_all_users() 
-    return templates.TemplateResponse("/block_confirmation.html", context={"request": request, "username" : username})
-
-
-@router.post("/block/{username}")
-def block_user(username: str) :
-    service.block_user(username)
-    response = RedirectResponse(url="/books/all", status_code=302)
-    return  response
-
-@router.get("/unblock/{username}")
-def unblock_form(request: Request, username : str):
-    service.get_all_users() 
-    return templates.TemplateResponse("/unblock_confirmation.html", context={"request": request, "username" : username})
-
-
-@router.post("/unblock/{username}")
-def unblock_user(username: str) :
-    service.unblock_user(username)
-    response = RedirectResponse(url="/books/all", status_code=302)
-    return  response
+@router.post("/admin")
+def admin_action(id: Annotated[str, Form()]):
+    service.grant_admin(id)
+    response = RedirectResponse(url="/users/admin", status_code=302)
+    return response

@@ -14,7 +14,7 @@ class User(Base):
     name            : Mapped[str] = mapped_column(String(72))
     email           : Mapped[str] = mapped_column(String(72), unique=True)
     password        : Mapped[str] = mapped_column(String(72))
-    interests       : Mapped[str] = mapped_column(String(72))
+    interests       : Mapped[str] = mapped_column(String(72), nullable=True)
     admin            : Mapped[bool] = mapped_column(Boolean(), default=False)
     articles: Mapped[List["Article"]] = relationship()
 

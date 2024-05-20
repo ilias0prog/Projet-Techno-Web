@@ -1,5 +1,5 @@
 from pydantic import BaseModel,Field
-from typing import List
+from typing import List, Optional
 
 class UserSchema(BaseModel):
     id :        str
@@ -8,5 +8,5 @@ class UserSchema(BaseModel):
     name :      str
     email :     str
     password :  str
-    interests : List[str]
+    interests : Optional[str] = None    
     admin :     bool = False

@@ -55,7 +55,6 @@ def get_user_by_username(thisUsername :str):
                 email = user.email,
                 password = user.password,
                 admin = user.admin,
-                blocked=user.blocked
             )
     
         
@@ -110,29 +109,10 @@ def get_all_users():
         
         return users_list
     
-def block_user(id : str):
-    # Blocks the user with the given username
-    with Session() as session:
-        statement = select(User).filter_by(id=id)
-        user = session.scalars(statement).one()
-
-        user.blocked = True
-        session.commit()
-
-
-def unblock_user(id : str):
-    # Blocks the user with the given username
-    with Session() as session:
-        statement = select(User).filter_by(id=id)
-        user = session.scalars(statement).one()
-
-        user.blocked = False
-        session.commit()
-
 
 def grant_admin(id : str):
-    # Blocks the user with the given username
+    # promote admin the user with the given username
     with Session() as session:
         statement = select(User).filter_by(id=id)
         user = session.scalars(statement).one()
-        #...
+        
