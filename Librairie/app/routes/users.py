@@ -11,7 +11,7 @@ from fastapi import Request
 
 
 
-templates = Jinja2Templates(directory="TP5\Librairie\Templates")
+templates = Jinja2Templates(directory="Librairie\Templates")
 router = APIRouter(prefix="/users")
 @router.get("/login")
 def login_form(request: Request):

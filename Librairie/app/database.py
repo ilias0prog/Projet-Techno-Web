@@ -6,7 +6,7 @@ from uuid import uuid4
 
 engine = create_engine(
     #"sqlite:///data/database.sqlite", 
-    "sqlite:///TP5\Librairie\data\database.sqlite", 
+    "sqlite:///Librairie\data\database.sqlite", 
     echo=True
 )
 
