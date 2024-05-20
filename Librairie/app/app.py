@@ -7,7 +7,7 @@ from starlette.staticfiles import StaticFiles
 from fastapi.staticfiles import StaticFiles
 from app.database import *
 
-templates = Jinja2Templates(directory="\TP4\Librairie\Templates")
+templates = Jinja2Templates(directory="Librairie\Templates")
 
 
 app = FastAPI(title="Twitter")
@@ -18,7 +18,7 @@ app.include_router(user_router)
 def route(request: Request):
     return RedirectResponse("./users/login", status_code= status.HTTP_303_SEE_OTHER)
 
-app.mount("/static", StaticFiles(directory="TP5/Librairie/static"), name="static")
+app.mount("/static", StaticFiles(directory="Librairie/static"), name="static")
 
 @app.on_event('startup')
 def on_startup():
