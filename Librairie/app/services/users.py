@@ -3,6 +3,13 @@ from uuid import uuid4
 from app.database import Session
 from app.models.usersandarticles import User
 from app.schemas.user import UserSchema
+from fastapi import Request, HTTPException
+
+def get_user_id_from_cookie(request: Request) -> str:
+    user_id = request.cookies.get("user_id")
+    if not user_id:
+        raise HTTPException(status_code=401, detail="User ID cookie not found")
+    return user_id
 
 """
 def get_user_by_username(username: str):
@@ -22,6 +29,7 @@ def get_user_by_username(username: str):
 """
 
 
+    
 def get_user_by_id(id: str):
     with Session() as session:
         statement = select(User).filter_by(id=id)
@@ -129,3 +137,12 @@ def grant_admin(id : str):
         statement = select(User).filter_by(id=id)
         user = session.scalars(statement).one()
         
+        if user is not None:
+            user.admin = True
+            session.commit()
+            return True 
+        else:
+            return False
+
+
+

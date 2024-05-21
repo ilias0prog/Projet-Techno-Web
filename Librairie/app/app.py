@@ -28,8 +28,6 @@ def on_startup():
     fill_users_db()
     fill_articles_db()
 
-
-
 def on_shutdown():
     print("Bye bye!")
     clear_database()

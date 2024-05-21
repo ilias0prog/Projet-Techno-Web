@@ -107,6 +107,13 @@ def unlike_article(article_id : str, article: ArticleSchema):
         article.likes -= 1
         session.commit
 
+def dislike_article(article_id : str, article: ArticleSchema):
+    with Session() as session:
+        statement = select(Article).where(Article.id == article_id)
+        article = session.scalars(statement).first()
+        article.dislikes += 1
+        session.commit()
+
 def undislike_article(article_id : str, article: ArticleSchema):
     with Session() as session:
         statement = select(Article).where(Article.id == article_id)

@@ -137,18 +137,17 @@ def fill_users_db():
     with Session() as session:
         for user_data in users_data:
             user = User(
-    id=user_data["id"],
-    username=user_data["username"],
-    firstname=user_data["firstname"],
-    name=user_data["name"],
-    email=user_data["email"],
-    password=user_data["password"],
-    interests  = "",
-    admin=user_data["admin"],
-    
-    )
-        session.add(user)
-        session.commit()
+                id=user_data["id"],
+                username=user_data["username"],
+                firstname=user_data["firstname"],
+                name=user_data["name"],
+                email=user_data["email"],
+                password=user_data["password"],
+                interests  = "",
+                admin=user_data["admin"],
+                )
+            session.add(user)
+            session.commit()
 
 def fill_articles_db():
     # Assurez-vous que les utilisateurs existent dans la base de donnees
@@ -240,16 +239,15 @@ def fill_articles_db():
                     "dislikes": 0
                 }
             ]
-
-        for article_data in articles_data:
-            article = Article(
-                author_id=article_data["author_id"],
-                title=article_data["title"],
-                date=article_data["date"],
-                content=article_data["content"],
-                theme=article_data["theme"],
-                likes=article_data["likes"],
-                dislikes=article_data["dislikes"],)
-            
-        session.add(article)
-        session.commit()
+        with Session() as session:
+            for article_data in articles_data:
+                article = Article(
+                    author_id=article_data["author_id"],
+                    title=article_data["title"],
+                    date=article_data["date"],
+                    content=article_data["content"],
+                    theme=article_data["theme"],
+                    likes=article_data["likes"],
+                    dislikes=article_data["dislikes"],)
+                session.add(article)
+                session.commit()
