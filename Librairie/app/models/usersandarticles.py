@@ -27,9 +27,10 @@ class Article(Base):
     date = Column(DateTime)
     content = Column(String(1024))
     theme = Column(String(64))
-    note = Column(Integer)
+    likes = Column(Integer)
+    dislikes = Column(Integer)
     author = relationship("User", back_populates="articles")
     __table_args__ = (
         CheckConstraint('theme IN ("sport", "culture", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),
-        CheckConstraint('note >= 0 AND note <= 5', name='check_note_range'),
+        #CheckConstraint('like >= 0 AND dislike >= 0', name='check_note_range'),
     )

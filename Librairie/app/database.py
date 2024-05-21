@@ -145,6 +145,7 @@ def fill_users_db():
     password=user_data["password"],
     interests  = "",
     admin=user_data["admin"],
+    
     )
         session.add(user)
         session.commit()
@@ -156,81 +157,89 @@ def fill_articles_db():
         if not users:
             print("No users found in the database. Please add users before adding articles.")
             return
-
         articles_data = [
-            {
-                "author_id": users[0].id,  # Assuming there is at least one user
-                "title": "The Future of Technology",
-                "date": datetime.now(),
-                "content": "A deep dive into the future trends of technology.",
-                "theme": "technology",
-                "note": 4
-            },
-            {
-                "author_id": users[1].id,
-                "title": "Health Benefits of Yoga",
-                "date": datetime.now(),
-                "content": "Exploring the numerous health benefits of practicing yoga.",
-                "theme": "health",
-                "note": 5
-            },
-            {
-                "author_id": users[2].id,
-                "title": "Political Landscape in 2024",
-                "date": datetime.now(),
-                "content": "An analysis of the current political trends and future projections.",
-                "theme": "politics",
-                "note": 3
-            },
-            {
-                "author_id": users[3].id,
-                "title": "Environmental Challenges",
-                "date": datetime.now(),
-                "content": "Addressing the major environmental challenges we face today.",
-                "theme": "environment",
-                "note": 4
-            },
-            {
-                "author_id": users[4].id,
-                "title": "Economic Growth Post-Pandemic",
-                "date": datetime.now(),
-                "content": "How the world economies are recovering after the pandemic.",
-                "theme": "economics",
-                "note": 4
-            },
-            {
-                "author_id": users[5].id,
-                "title": "Social Media and Society",
-                "date": datetime.now(),
-                "content": "The impact of social media on modern society.",
-                "theme": "social",
-                "note": 3
-            },
-            {
-                "author_id": users[6].id,
-                "title": "International Relations in a Globalized World",
-                "date": datetime.now(),
-                "content": "The dynamics of international relations in today's globalized world.",
-                "theme": "international",
-                "note": 5
-            },
-            {
-                "author_id": users[7].id,
-                "title": "The Cultural Significance of Art",
-                "date": datetime.now(),
-                "content": "Understanding the cultural importance and influence of art.",
-                "theme": "culture",
-                "note": 4
-            },
-            {
-                "author_id": users[8].id,
-                "title": "The Evolution of Sports",
-                "date": datetime.now(),
-                "content": "A look into how sports have evolved over the years.",
-                "theme": "sport",
-                "note": 4
-            }
-        ]
+                {
+                    "author_id": users[0].id, 
+                    "title": "The Future of Technology",
+                    "date": datetime.now(),
+                    "content": "A deep dive into the future trends of technology.",
+                    "theme": "technology",
+                    "likes": 4,
+                    "dislikes": 1
+                },
+                {
+                    "author_id": users[1].id,
+                    "title": "Health Benefits of Yoga",
+                    "date": datetime.now(),
+                    "content": "Exploring the numerous health benefits of practicing yoga.",
+                    "theme": "health",
+                    "likes": 5,
+                    "dislikes": 0
+                },
+                {
+                    "author_id": users[2].id,
+                    "title": "Political Landscape in 2024",
+                    "date": datetime.now(),
+                    "content": "An analysis of the current political trends and future projections.",
+                    "theme": "politics",
+                    "likes": 3,
+                    "dislikes": 0
+                },
+                {
+                    "author_id": users[3].id,
+                    "title": "Environmental Challenges",
+                    "date": datetime.now(),
+                    "content": "Addressing the major environmental challenges we face today.",
+                    "theme": "environment",
+                    "likes": 4,
+                    "dislikes": 0
+                },
+                {
+                    "author_id": users[4].id,
+                    "title": "Economic Growth Post-Pandemic",
+                    "date": datetime.now(),
+                    "content": "How the world economies are recovering after the pandemic.",
+                    "theme": "economics",
+                    "likes": 4,
+                    "dislikes": 0
+                },
+                {
+                    "author_id": users[5].id,
+                    "title": "Social Media and Society",
+                    "date": datetime.now(),
+                    "content": "The impact of social media on modern society.",
+                    "theme": "social",
+                    "likes": 3,
+                    "dislikes": 0
+                },
+                {
+                    "author_id": users[6].id,
+                    "title": "International Relations in a Globalized World",
+                    "date": datetime.now(),
+                    "content": "The dynamics of international relations in today's globalized world.",
+                    "theme": "international",
+                    "likes": 5,
+                    "dislikes": 0
+                },
+                {
+                    "author_id": users[7].id,
+                    "title": "The Cultural Significance of Art",
+                    "date": datetime.now(),
+                    "content": "Understanding the cultural importance and influence of art.",
+                    "theme": "culture",
+                    "likes": 4,
+                    "dislikes": 0
+                },
+                {
+                    "author_id": users[8].id,
+                    "title": "The Evolution of Sports",
+                    "date": datetime.now(),
+                    "content": "A look into how sports have evolved over the years.",
+                    "theme": "sport",
+                    "likes": 4,
+                    "dislikes": 0
+                }
+            ]
 
         for article_data in articles_data:
             article = Article(
@@ -239,7 +248,8 @@ def fill_articles_db():
                 date=article_data["date"],
                 content=article_data["content"],
                 theme=article_data["theme"],
-                note=article_data["note"]
-            )
+                likes=article_data["likes"],
+                dislikes=article_data["dislikes"],)
+            
         session.add(article)
         session.commit()
