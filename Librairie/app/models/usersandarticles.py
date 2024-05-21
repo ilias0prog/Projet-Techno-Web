@@ -8,27 +8,27 @@ from app.database import Base
 class User(Base):
     __tablename__ = 'users' 
 
-    id              : Mapped[str] = mapped_column(String(72), primary_key=True)
-    username        : Mapped[str] = mapped_column(String(72), unique=True)
-    firstname       : Mapped[str] = mapped_column(String(72))
-    name            : Mapped[str] = mapped_column(String(72))
-    email           : Mapped[str] = mapped_column(String(72), unique=True)
-    password        : Mapped[str] = mapped_column(String(72))
-    interests       : Mapped[str] = mapped_column(String(72), nullable=True)
-    admin            : Mapped[bool] = mapped_column(Boolean(), default=False)
-    articles: Mapped[List["Article"]] = relationship()
-
+    id = Column(String(72), primary_key=True)
+    username = Column(String(72), unique=True)
+    firstname = Column(String(72))
+    name = Column(String(72))
+    email = Column(String(72), unique=True)
+    password = Column(String(72))
+    interests = Column(String(72), nullable=True)
+    admin = Column(Boolean(), default=False)
+    articles = relationship("Article", back_populates="author")
+    
 class Article(Base):
     __tablename__ = 'articles' 
 
     id = Column(Integer, primary_key=True)
-    author_id : Mapped[str] = mapped_column(ForeignKey("users.id"))  # Clé étrangère vers la table users
-    title = mapped_column(String, nullable=False)
-    date = mapped_column(DateTime)
-    content = mapped_column(String(1024))
-    theme = mapped_column(String(64))
-    note = mapped_column(Integer)
-    author : Mapped["User"] = relationship()
+    author_id = Column(String(72), ForeignKey("users.id"))  # Clé étrangère vers la table users
+    title = Column(String, nullable=False)
+    date = Column(DateTime)
+    content = Column(String(1024))
+    theme = Column(String(64))
+    note = Column(Integer)
+    author = relationship("User", back_populates="articles")
     __table_args__ = (
         CheckConstraint('theme IN ("sport", "culture", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),
         CheckConstraint('note >= 0 AND note <= 5', name='check_note_range'),

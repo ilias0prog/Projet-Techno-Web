@@ -16,6 +16,7 @@ router = APIRouter(prefix="/users")
 @router.get("/login")
 def login_form(request: Request):
     return templates.TemplateResponse("/login.html", {"request": request})
+"""
 @router.post("/login")
 def login_route( username: Annotated[str, Form()], password: Annotated[str,Form()]):
     
@@ -36,6 +37,43 @@ def login_route( username: Annotated[str, Form()], password: Annotated[str,Form(
             httponly=True
         )
         return response
+"""
+# ChatGPT version : 
+
+@router.post("/login")
+def login_route(username: Annotated[str, Form()], password: Annotated[str, Form()]):
+    try:
+        user = service.get_user_by_username(username)
+        if user is not None:
+            if user.password != password:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Incorrect password."
+                )
+            
+            access_token = login_manager.create_access_token(
+                data={'sub': user.id}
+            )
+            response = RedirectResponse(url="/books/all", status_code=302)
+            response.set_cookie(
+                key=login_manager.cookie_name,
+                value=access_token,
+                httponly=True
+            )
+            return response
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found."
+            )
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        print(f"Unexpected error during login: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error."
+        )
 
 
 

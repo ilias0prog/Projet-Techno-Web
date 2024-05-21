@@ -38,24 +38,36 @@ def get_user_by_id(id: str):
                 email=user.email,
                 password=user.password,
                 admin=user.admin,
-                blocked=user.blocked
             )
     return None
 
 
-def get_user_by_username(thisUsername :str):
+def get_user_by_username(thisUsername: str):
     with Session() as session:
-        user = session.query(User).filter(User.username == thisUsername).first()
-        if user is not None:
-            return UserSchema (
-                id = user.id,
-                username=user.username,
-                firstname = user.firstname,
-                name = user.name,
-                email = user.email,
-                password = user.password,
-                admin = user.admin,
-            )
+        try:
+            user = session.query(User).filter(User.username == thisUsername).first()
+            if user is not None:
+                # Log the user to verify it's correct
+                print(f"Fetched user: {user}")
+                return UserSchema(
+                    id=user.id,
+                    username=user.username,
+                    firstname=user.firstname,
+                    name=user.name,
+                    email=user.email,
+                    password=user.password,
+                    interests=user.interests,
+                    admin=user.admin,
+                    articles=user.articles,
+                )
+            else:
+                print("User not found")
+                return None
+        except Exception as e:
+            print(f"Error fetching user by username: {e}")
+            return None
+
+
     
         
 
@@ -102,8 +114,9 @@ def get_all_users():
                 name=user.name,
                 email=user.email,
                 password=user.password,
+                interests = user.interests,
                 admin =user.admin,
-                blocked = user.blocked
+                articles = user.articles,
             )
             users_list.append(user_schema)
         
