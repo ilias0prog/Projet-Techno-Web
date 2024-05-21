@@ -16,7 +16,7 @@ class User(Base):
     password = Column(String(72))
     interests = Column(String(72), nullable=True)
     admin = Column(Boolean(), default=False)
-    articles = relationship("Article", back_populates="author")
+    articles: Mapped[List["Article"]] = relationship()
     comments = relationship("Comment", back_populates="author")
     
 class Article(Base):
@@ -31,6 +31,7 @@ class Article(Base):
     likes = Column(Integer)
     dislikes = Column(Integer)
     author = relationship("User", back_populates="articles")
+    comments: Mapped[List["Comment"]] = relationship( "Comment", back_populates="article")
     __table_args__ = (
         CheckConstraint('theme IN ("sport", "culture", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),
         CheckConstraint('like >= 0 AND dislike >= 0', name='check_note_range'),
@@ -41,7 +42,7 @@ class Comment(Base):
     author_id = Column(String(72), ForeignKey("users.id"), primary_key = True ) 
     article_id = Column(Integer, ForeignKey("articles.id"), primary_key = True )
     content = Column(String(1024))
-    article = relationship("Article", back_populates="articles")
-    author = relationship("User", back_populates="articles")
+    article = relationship("Article", back_populates="comments")
+    author = relationship("User", back_populates="comments")
     __table_args__ = (
         UniqueConstraint('author_id', 'article_id', name='uq_author_article'),)

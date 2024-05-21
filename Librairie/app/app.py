@@ -25,8 +25,6 @@ app.mount("/static", StaticFiles(directory="Librairie/static"), name="static")
 def on_startup():
     print("Server started.")
     create_database()
-    fill_users_db()
-    fill_articles_db()
 
 def on_shutdown():
     print("Bye bye!")
