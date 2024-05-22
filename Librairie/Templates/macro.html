@@ -9,11 +9,11 @@
     <h1 class="card-title">{{ title }}</h1>
     <p class="card-article">{{ content }}</p>
 
-    <button class="comment-toggle-btn" onclick="toggleCommentForm({{ articleId }})"><i class='bx bx-comment'></i></button>
+    <button class="comment-toggle-btn" onclick="toggleCommentForm({{ article.id }})"><i class='bx bx-comment'></i></button>
 
     <div class="comment-form-container" id="comment-form-{{ article_id }}" style="display: none;">
-        <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article_id }})">
-            <textarea name="comment" placeholder="Write your comment" required></textarea>
+        <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article.id }})">
+            <textarea name="comment" placeholder="  Write your comment" required></textarea>
             <input type="hidden" name="article_id" value="{{ article_id }}">
             <button type="submit">Post Comment</button>
         </form>

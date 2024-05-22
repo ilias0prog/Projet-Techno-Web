@@ -26,3 +26,8 @@ def add_comment(article_id: str, comment_data: str):
 
 #def upadte_comment(article_id : str, article: ArticleSchema):
 
+def get_comments_by_article(article_id : str):
+    with Session() as session:
+        statement = select(Comment).where(Comment.article_id == article_id)
+        comments = session.execute(statement).scalars().all()
+        return comments

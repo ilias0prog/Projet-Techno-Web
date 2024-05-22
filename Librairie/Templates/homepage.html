@@ -42,14 +42,42 @@
     </div>
     
     <script>
-        function toggleCommentForm(articleId) {
-            const form = document.getElementById(`comment-form-${articleId}`);
-            if (form.style.display === "none") {
-                form.style.display = "block";
-            } else {
-                form.style.display = "none";
-            }
-        }
+       function toggleCommentForm(articleId) {
+    const form = document.getElementById(`comment-form-${articleId}`);
+    const button = document.getElementsByClassName(`comment-toggle-btn`);
+    if (form.style.display === "none") {
+        form.style.display = "block";
+        button.style.display = "none";
+    } else {
+        form.style.display = "none";
+        button.style.display = "block";
+    }
+}
+
+
+        async function loadComments(articleId) {
+    try {
+        const response = await fetch('/load-comments/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ article_id: articleId })
+        });
+        const data = await response.json();
+        return data.comments;
+    } catch (error) {
+        console.error('Error loading comments:', error);
+    }
+}
+
+    // Exemple d'utilisation : appeler cette fonction lorsque l'utilisateur appuie sur un bouton
+    async function handleLoadCommentsButtonClick(articleId) {
+        const comments = await loadComments(articleId);
+        // Utilisez les commentaires récupérés pour mettre à jour l'interface utilisateur
+        console.log('Comments:', comments);
+}
+
     </script>
 
 </body>
