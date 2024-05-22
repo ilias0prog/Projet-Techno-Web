@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 * {
     margin: 0;
     padding: 0;
@@ -187,17 +186,19 @@ body {
 
 .card-infos {
     display: flex;
-    align-items: baseline;
+    align-items: center;
 }
 
 .card-username{
     display: inline-block;
+    font-weight: 400;
     /* margin-right: 20%; */
 
 }
 
 .card-theme {
     margin-left: auto;
+    font-weight: 400;
 }
 
 #card-profilepicture {
@@ -205,13 +206,14 @@ body {
     padding-right: 5px;
 }
 
-#sport-logo {
-    font-size: 1.8em;
+#card-logo {
+    font-size: 1.6em;
     padding-left: 5px;
 }
 
 .card-date {
     display: inline-block;
+    font-weight: 400;
     /* margin-left: 20%; */
     margin-left: auto;
 }
@@ -227,6 +229,9 @@ body {
     padding: 50px;
     padding-top: 20px;
     line-height: 1.8;
+
+    font-family: "bitter";
+    font-weight: 600;
 }
 
 /* .comment-toggle-btn{
@@ -248,6 +253,7 @@ body {
 }
 
 .comment-form-container textarea {
+    padding: 8px;
     background: #fffff8;
     color: black;
     border: none;
@@ -268,17 +274,23 @@ body {
     display:block;
     padding: 10px;
     background-color: #fffff8;
-    color: #000;
+    /* color: #000; */
+    font-size: 1.3em;
     border: solid #fffff8 3px;
     border-radius: 4px;
     cursor: pointer;
     transition: ease .3s;
-    box-shadow: .1rem .2rem .4rem rgba(0, 0, 0, .2);
+    box-shadow: .1rem .15rem .2rem rgba(0, 0, 0, .1);
+    justify-content:start;
 
 }
 
 .comment-form-container button:hover {
-    box-shadow: .2rem .4rem .8rem rgba(0, 0, 0, .2);
+    box-shadow: .1rem .2rem .4rem rgba(0, 0, 0, .2);
+}
+
+.comment-form-container button:active {
+    box-shadow: .2rem .4rem .8rem rgba(0, 0, 0, .25);
 }
 
 .comment-toggle-btn {
@@ -292,7 +304,7 @@ body {
     border-radius: 30px;
     cursor: pointer;
 
-    transition: all ease .3s;
+    transition: all ease-out .3s;
     box-shadow: .1rem .15rem .2rem rgba(0, 0, 0, .1);
 
 }
@@ -304,4 +316,3 @@ body {
 .comment-toggle-btn:active {
     box-shadow: .2rem .4rem .8rem rgba(0, 0, 0, .25);
 } 
-

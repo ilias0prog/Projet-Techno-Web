@@ -28,7 +28,7 @@ def get_feed(request : Request, user: UserSchema = Depends(login_manager)):
     print(service.get_all_articles_by_themes(themes))
     return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : articles, "user" : user})
 
-@router.post("/load-comments/")
+@router.post("/load_comments/")
 async def load_comments(article_id: int):
     comments = get_comments_by_article(article_id)
     return {"comments": comments}
