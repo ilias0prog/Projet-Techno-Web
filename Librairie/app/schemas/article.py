@@ -3,7 +3,7 @@ from typing import List
 
 class ArticleSchema(BaseModel):
     id :         str
-    author_id :  str
+    author_username :  str
     title :      str
     date :       str
     content :    str

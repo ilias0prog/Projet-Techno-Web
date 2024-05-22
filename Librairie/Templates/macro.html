@@ -1,60 +1,40 @@
-{% macro show_book(id,name, author, editor, price) %}
+{% macro show_article(article_id, author_username, title, date, content, theme, likes, dislikes, article) %}
+<div class="news-card">
+    <div class="card-infos">
+        <i class='bx bx-user-circle' id="card-profilepicture"></i>
+        <h3 class="card-username">{{ author_username }}</h3>
+        <h2 class="card-theme">{{ theme }}</h2> <i class='bx bx-basketball' id="sport-logo"></i>
+        <h3 class="card-date">{{ date.strftime("%d.%m.%Y") }}</h3>
+    </div>
+    <h1 class="card-title">{{ title }}</h1>
+    <p class="card-article">{{ content }}</p>
 
-<head>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-</head>
+    <button class="comment-toggle-btn" onclick="toggleCommentForm({{ articleId }})"><i class='bx bx-comment'></i></button>
 
-    <tr>
-        <td>
-            <a class="btn btn-outline-dark mx-2" href="/books/update/{{ id }}"><i class='bx bx-message-square-edit' id="edit_button"></i></a>
-        </td>
+    <div class="comment-form-container" id="comment-form-{{ article_id }}" style="display: none;">
+        <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article_id }})">
+            <textarea name="comment" placeholder="Write your comment" required></textarea>
+            <input type="hidden" name="article_id" value="{{ article_id }}">
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
 
-        <td>
-            <a class="btn btn-outline-dark mx-2" href="/books/delete/{{ id }}"><i class='bx bx-message-square-x' id="delete_button"></i></a>
-
-        </td>
-
-        <td class="book_name_cells">{{ name }}</td>
-
-        <td>{{ author }}</td>
-
-        <td>{{ editor }}</td>
-
-        <td>{{ price }} €</td>
-    </tr>
+</div>
 {% endmacro %}
 
-{% macro show_article(article_id, author_id, title, date, content, theme, likes, dislikes) %}
-    <div class="news-card">
-        <div class="card-infos">
-            <i class='bx bx-user-circle' id="card-profilepicture"></i>
-            <h3 class="card-username">@{{ author_id }}</h3>
-            <h2 class="card-theme">{{ theme }}</h2>
-            <i class='bx bx-basketball' id="sport-logo"></i>
-            <h3 class="card-date">{{ date }}</h3>
-        </div>
-        <h1 class="card-title">{{ title }}</h1>
-        <p class="card-article">{{ content }}</p>
-        <div class="card-reactions">
-            <span class="likes">👍 {{ likes }}</span>
-            <span class="dislikes">👎 {{ dislikes }}</span>
-        </div>
+    
+
+
+{% macro show_comment( article_id, author_id, date, content, likes, dislikes) %}
+<div class="news-card">
+    <div class="card-infos">
+        <i class='bx bx-user-circle' id="card-profilepicture"></i><h3 class="card-username">{{ author_name }}</h3>
+        <h2 class="card-theme">{{ theme }}</h2>
+        <h3 class="card-date">{{ date.strftime("%d.%m.%Y") }}</h3>
     </div>
-{% endmacro %}
-{% macro show_comment(comment_id, article_id, author_id, date, content, likes, dislikes) %}
-    <div class="comment-card">
-        <div class="card-infos">
-            <i class='bx bx-user-circle' id="card-profilepicture"></i>
-            <h3 class="card-username">@{{ author_id }}</h3>
-            <i class='bx bx-basketball' id="sport-logo"></i>
-            <h3 class="card-date">{{ date }}</h3>
-        </div>
-        <p class="card-comment">{{ content }}</p>
-        <div class="card-reactions">
-            <span class="likes">👍 {{ likes }}</span>
-            <span class="dislikes">👎 {{ dislikes }}</span>
-        </div>
-    </div>
+    <h1 class="card-title">{{ title }}</h1>
+    <p class="card-article">{{ content }}</p>
+</div>
 {% endmacro %}
 
 {% macro show_user(username,firstname, name, email,admin, blocked) %}

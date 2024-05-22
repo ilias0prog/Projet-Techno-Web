@@ -30,9 +30,28 @@
 
     <div class="feed-container">
         {% for article in articles %}
-            {{ show_article(article.id, article.author_id, article.title, article.date, article.content, article.theme, article.likes, article.dislikes) }}
+        {{ show_article(article.id, article.author_username, article.title, article.date, article.content, article.theme, article.likes, article.dislikes, article) }}
+        <div class="comment-form-container" id="comment-form-{{ article.id }}">
+            <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article.id }})">
+                <textarea name="comment" placeholder="Write your comment" required></textarea>
+                <input type="hidden" name="article_id" value="{{ article.id }}">
+                <button type="submit">Post Comment</button>
+            </form>
+        </div>
         {% endfor %}
     </div>
+    
+    <script>
+        function toggleCommentForm(articleId) {
+            const form = document.getElementById(`comment-form-${articleId}`);
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+    </script>
+
 </body>
 </html>
 

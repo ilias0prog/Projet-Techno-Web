@@ -23,14 +23,18 @@ class Article(Base):
     __tablename__ = 'articles' 
 
     id = Column(Integer, primary_key=True)
-    author_id = Column(String(72), ForeignKey("users.id"))  # Clé étrangère vers la table users
+    author_username = Column(String(72), ForeignKey("users.username"))  # Clé étrangère vers la colonne username de la table users
     title = Column(String, nullable=False)
     date = Column(DateTime)
     content = Column(String(1024))
     theme = Column(String(64))
     likes = Column(Integer)
     dislikes = Column(Integer)
+    #author = relationship("User", foreign_keys=[author_id, author_username])
+
     author = relationship("User", back_populates="articles")
+
+ 
     comments: Mapped[List["Comment"]] = relationship( "Comment", back_populates="article")
     __table_args__ = (
         CheckConstraint('theme IN ("sport", "culture", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),

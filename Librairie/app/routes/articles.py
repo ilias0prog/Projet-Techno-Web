@@ -8,7 +8,7 @@ from app.schemas import *
 from Templates import *
 from app.login_manager import *
 from app.services import articles as service
-from app.services.users import get_user_id_from_cookie, get_user_by_id
+from app.services.users import get_user_by_id
 from app.schemas.user import UserSchema
 
 
@@ -21,8 +21,8 @@ router = APIRouter(prefix="/articles", tags=["articles"])
 def get_feed(request : Request, user: UserSchema = Depends(login_manager)):
     # Fetch connected user info with cookie 
     themes = user.interests.split(' ')
+    articles = service.get_all_articles_by_themes(themes)
 
     print(themes)
     print(service.get_all_articles_by_themes(themes))
-    return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : service.get_all_articles_by_themes(themes), "user" : user})
-
+    return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : articles, "user" : user})

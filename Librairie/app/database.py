@@ -145,7 +145,7 @@ def fill_users_db():
                 name=user_data["name"],
                 email=user_data["email"],
                 password=user_data["password"],
-                interests  = -["sport"],
+                interests  = "sport",
                 admin=user_data["admin"],
                 )
             session.add(user)
@@ -160,7 +160,8 @@ def fill_articles_db():
             return
         articles_data = [
                 {
-                    "author_id": users[0].id, 
+                    
+                    "author_username": users[0].username,
                     "title": "The Future of Technology",
                     "date": datetime.now(),
                     "content": "A deep dive into the future trends of technology.",
@@ -169,7 +170,8 @@ def fill_articles_db():
                     "dislikes": 1
                 },
                 {
-                    "author_id": users[1].id,
+                    
+                    "author_username": users[1].username,
                     "title": "Health Benefits of Yoga",
                     "date": datetime.now(),
                     "content": "Exploring the numerous health benefits of practicing yoga.",
@@ -178,7 +180,8 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    "author_id": users[2].id,
+                    
+                    "author_username": users[2].username,
                     "title": "Political Landscape in 2024",
                     "date": datetime.now(),
                     "content": "An analysis of the current political trends and future projections.",
@@ -187,7 +190,8 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    "author_id": users[3].id,
+                    
+                    "author_username": users[3].username,
                     "title": "Environmental Challenges",
                     "date": datetime.now(),
                     "content": "Addressing the major environmental challenges we face today.",
@@ -196,7 +200,8 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    "author_id": users[4].id,
+                    
+                    "author_username": users[4].username,
                     "title": "Economic Growth Post-Pandemic",
                     "date": datetime.now(),
                     "content": "How the world economies are recovering after the pandemic.",
@@ -205,7 +210,8 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    "author_id": users[5].id,
+                    
+                    "author_username": users[5].username,
                     "title": "Social Media and Society",
                     "date": datetime.now(),
                     "content": "The impact of social media on modern society.",
@@ -214,7 +220,8 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    "author_id": users[6].id,
+                    
+                    "author_username": users[6].username,
                     "title": "International Relations in a Globalized World",
                     "date": datetime.now(),
                     "content": "The dynamics of international relations in today's globalized world.",
@@ -223,7 +230,8 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    "author_id": users[7].id,
+                    
+                    "author_username": users[7].username,
                     "title": "The Cultural Significance of Art",
                     "date": datetime.now(),
                     "content": "Understanding the cultural importance and influence of art.",
@@ -232,7 +240,8 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    "author_id": users[8].id,
+                    
+                    "author_username": users[8].username,
                     "title": "The Evolution of Sports",
                     "date": datetime.now(),
                     "content": "A look into how sports have evolved over the years.",
@@ -244,7 +253,7 @@ def fill_articles_db():
         with Session() as session:
             for article_data in articles_data:
                 article = Article(
-                    author_id=article_data["author_id"],
+                    author_username=article_data["author_username"],
                     title=article_data["title"],
                     date=article_data["date"],
                     content=article_data["content"],

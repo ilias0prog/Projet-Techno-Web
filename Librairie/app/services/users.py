@@ -11,7 +11,7 @@ def get_user_id_from_cookie(request: Request) -> str:
         raise HTTPException(status_code=401, detail="User ID cookie not found")
     return user_id
 
-"""
+
 def get_user_by_username(username: str):
     with Session() as session:
         statement = select(User).filter_by(username=username)
@@ -26,7 +26,7 @@ def get_user_by_username(username: str):
                 password = user.password,
             )
     return None
-"""
+
 
 
     

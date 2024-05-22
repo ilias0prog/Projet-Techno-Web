@@ -29,7 +29,7 @@ def get_all_articles_by_theme(theme :str):
             return [
                 Article(
                     id          = article.id,
-                    author_id   = article.author_id,
+                    author_username   = article.author_username,
                     title       = article.title,
                     date        = article.date,
                     content     = article.content,
@@ -39,21 +39,22 @@ def get_all_articles_by_theme(theme :str):
                 for article in articles_data]
         
 
-def get_all_articles_by_themes(themes : list):
-        with Session() as session:
-            statement = select(Article).where(Article.theme in themes)
-            articles_data = session.scalars(statement).all()
-            return [
-                Article(
-                    id          = article.id,
-                    author_id   = article.author_id,
-                    title       = article.title,
-                    date        = article.date,
-                    content     = article.content,
-                    theme       = article.theme,
-                    likes       = article.likes,
-                    dislikes    = article.dislikes)
-                for article in articles_data]
+def get_all_articles_by_themes(themes: list):
+    with Session() as session:
+        statement = select(Article).where(Article.theme.in_(themes))
+        articles_data = session.execute(statement).scalars().all()
+        return [
+            Article(
+                id=article.id,
+                author_username   = article.author_username,
+                title=article.title,
+                date=article.date,
+                content=article.content,
+                theme=article.theme,
+                likes=article.likes,
+                dislikes=article.dislikes)
+            for article in articles_data]
+
         
 
 def get_article_by_id(article_id: str) -> ArticleSchema | None:
@@ -72,7 +73,7 @@ def get_article_by_id(article_id: str) -> ArticleSchema | None:
         if article is not None:
             return ArticleSchema(
                 id=article.id,
-                author_id=article.author_id,
+                author_username   = article.author_username,
                 title=article.title,
                 date=article.date,
                 content=article.content,
@@ -86,7 +87,7 @@ def add_article (article: ArticleSchema) -> ArticleSchema:
     with Session() as session:
         new_article = Article(
             id = str(uuid4()),
-            author_id = article.author_id,
+            author_username   = article.author_username,
             title = article.title,
             date = article.date,
             content = article.content,
