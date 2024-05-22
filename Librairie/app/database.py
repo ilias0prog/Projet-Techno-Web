@@ -145,7 +145,7 @@ def fill_users_db():
                 name=user_data["name"],
                 email=user_data["email"],
                 password=user_data["password"],
-                interests  = "",
+                interests  = -["sport"],
                 admin=user_data["admin"],
                 )
             session.add(user)

@@ -16,7 +16,7 @@ class User(Base):
     password = Column(String(72))
     interests = Column(String(72), nullable=True)
     admin = Column(Boolean(), default=False)
-    articles: Mapped[List["Article"]] = relationship()
+    articles: Mapped[List["Article"]] = relationship("Article", back_populates="author")
     comments = relationship("Comment", back_populates="author")
     
 class Article(Base):
@@ -34,7 +34,8 @@ class Article(Base):
     comments: Mapped[List["Comment"]] = relationship( "Comment", back_populates="article")
     __table_args__ = (
         CheckConstraint('theme IN ("sport", "culture", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),
-        CheckConstraint('like >= 0 AND dislike >= 0', name='check_note_range'),
+        CheckConstraint('likes >= 0' , name='check_like_range'),
+        CheckConstraint('dislikes >= 0' , name='check_dislike_range'),
     )
 
 class Comment(Base):

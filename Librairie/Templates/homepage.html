@@ -1,3 +1,5 @@
+{% from "macro.html" import show_article %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,20 +36,3 @@
 </body>
 </html>
 
-{% macro show_article(article_id, author_id, title, date, content, theme, likes, dislikes) %}
-    <div class="news-card">
-        <div class="card-infos">
-            <i class='bx bx-user-circle' id="card-profilepicture"></i>
-            <h3 class="card-username">@{{ author_id }}</h3>
-            <h2 class="card-theme">{{ theme }}</h2>
-            <i class='bx bx-basketball' id="sport-logo"></i>
-            <h3 class="card-date">{{ date }}</h3>
-        </div>
-        <h1 class="card-title">{{ title }}</h1>
-        <p class="card-article">{{ content }}</p>
-        <div class="card-reactions">
-            <span class="likes">👍 {{ likes }}</span>
-            <span class="dislikes">👎 {{ dislikes }}</span>
-        </div>
-    </div>
-{% endmacro %}
