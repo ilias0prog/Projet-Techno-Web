@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from uuid import uuid4
 from datetime import datetime
+import random
 
 engine = create_engine(
     #"sqlite:///data/database.sqlite", 
@@ -17,6 +18,7 @@ class Base(DeclarativeBase):
 
 from app.models.usersandarticles import  User
 from app.models.usersandarticles import  Article
+from app.models.usersandarticles import  Comment
 
 
 
@@ -251,3 +253,79 @@ def fill_articles_db():
                     dislikes=article_data["dislikes"],)
                 session.add(article)
                 session.commit()
+
+def fill_comments_db():
+    with Session() as session:
+        # Récupérer les utilisateurs et les articles existants
+        users = session.query(User).all()
+        articles = session.query(Article).all()
+        
+        if not users:
+            print("No users found in the database. Please add users before adding comments.")
+            return
+        
+        if not articles:
+            print("No articles found in the database. Please add articles before adding comments.")
+            return
+        
+        comments_data = [
+            {
+                "author_id": (users)[0].id,
+                "article_id": random.choice(articles).id,
+                "content": "Great article! Very informative."
+            },
+            {
+                "author_id": (users)[1].id,
+                "article_id": random.choice(articles).id,
+                "content": "I completely disagree with the points made in this article."
+            },
+            {
+                "author_id": (users)[2].id,
+                "article_id": random.choice(articles).id,
+                "content": "Well written and very insightful."
+            },
+            {
+                "author_id": (users)[3].id,
+                "article_id": random.choice(articles).id,
+                "content": "This article needs more references."
+            },
+            {
+                "author_id": (users)[4].id,
+                "article_id": random.choice(articles).id,
+                "content": "Interesting perspective, I learned something new."
+            },
+            {
+                "author_id": (users)[5].id,
+                "article_id": random.choice(articles).id,
+                "content": "The article was too long, it could have been shorter."
+            },
+            {
+                "author_id": (users)[6].id,
+                "article_id": random.choice(articles).id,
+                "content": "I enjoyed reading this, keep up the good work."
+            },
+            {
+                "author_id": (users)[7].id,
+                "article_id": random.choice(articles).id,
+                "content": "This article is biased, please provide balanced views."
+            },
+            {
+                "author_id": (users)[8].id,
+                "article_id": random.choice(articles).id,
+                "content": "Excellent writing, I look forward to more articles like this."
+            },
+            {
+                "author_id": (users)[9].id,
+                "article_id": random.choice(articles).id,
+                "content": "Not enough evidence to support the claims made in this article."
+            }
+        ]
+
+        for comment_data in comments_data:
+            comment = Comment(
+                author_id=comment_data["author_id"],
+                article_id=comment_data["article_id"],
+                content=comment_data["content"]
+            )
+            session.add(comment)
+            session.commit()

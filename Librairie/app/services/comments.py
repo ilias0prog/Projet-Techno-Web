@@ -21,8 +21,8 @@ def add_comment(article_id: str, comment_data: str):
     session.refresh(comment)
 
 
-def remove_comment(article_id : str, article: ArticleSchema):
+#def remove_comment(article_id : str, article: ArticleSchema):
 
 
-def upadte_comment(article_id : str, article: ArticleSchema):
+#def upadte_comment(article_id : str, article: ArticleSchema):
 
