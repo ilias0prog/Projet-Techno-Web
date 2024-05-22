@@ -31,3 +31,13 @@ def get_comments_by_article(article_id : str):
         statement = select(Comment).where(Comment.article_id == article_id)
         comments = session.execute(statement).scalars().all()
         return comments
+
+
+def add_comment(content: str, article_id: str, author_id : str):
+    with Session() as session:
+        comment = Comment(
+            author_id   =author_id,
+            article_id  =article_id,
+            content     =content)
+        session.add(comment)
+        session.commit()

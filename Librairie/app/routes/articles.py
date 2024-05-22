@@ -9,7 +9,9 @@ from Templates import *
 from app.login_manager import *
 from app.services import articles as service
 from app.services.users import get_user_by_id
+from app.services.comments import *
 from app.schemas.user import UserSchema
+from app.schemas.comment import CommentSchema
 from app.services.comments import *
 
 
@@ -32,6 +34,12 @@ def get_feed(request : Request, user: UserSchema = Depends(login_manager)):
 async def load_comments(article_id: int):
     comments = get_comments_by_article(article_id)
     return {"comments": comments}
+
+@router.post("/post_comment")
+async def post_comment(request : Request, content : str, article_id : str, user : UserSchema = Depends(login_manager)):
+    comment = CommentSchema(author_id=user.id, article_id=article_id, content = content)
+    add_comment(content, article_id, user.id)
+    return comment
 
 @router.get("/create")
 def create_article(request : Request, user: UserSchema = Depends(login_manager)):

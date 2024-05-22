@@ -7,6 +7,7 @@
     <title>My website</title>
     <link rel="stylesheet" href="../static/homepage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="..\static\scripts\homepage_scripts.js"></script>
 </head>
 <body>
     <header class="header">
@@ -40,55 +41,6 @@
         </div>
         {% endfor %}
     </div>
-    
-    <script>
-    function toggleComments(articleId) {
-    const commentsContainer = document.getElementById(`comments-container-${articleId}`);
-    if (commentsContainer.style.display === "none" || commentsContainer.style.display === "") {
-        commentsContainer.style.display = "block";
-    } else {
-        commentsContainer.style.display = "none";
-    }
-}
-        
-       function toggleCommentForm(articleId) {
-    const form = document.getElementById(`comment-form-${articleId}`);
-    const button = document.getElementsByClassName(`comment-toggle-btn`);
-    if (form.style.display === "none") {
-        form.style.display = "block";
-        button.style.display = "none";
-    } else {
-        form.style.display = "none";
-        button.style.display = "block";
-    }
-}
-
-
-        async function loadComments(articleId) {
-    try {
-        const response = await fetch('/articles/load_comments', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ article_id: articleId })
-        });
-        const data = await response.json();
-        return data.comments;
-    } catch (error) {
-        console.error('Error loading comments:', error);
-    }
-}
-
-    // Exemple d'utilisation : appeler cette fonction lorsque l'utilisateur appuie sur un bouton
-    async function handleLoadCommentsButtonClick(articleId) {
-        const comments = await loadComments(articleId);
-        // Utilisez les commentaires récupérés pour mettre à jour l'interface utilisateur
-        console.log('Comments:', comments);
-}
-
-    </script>
-
 </body>
 </html>
 

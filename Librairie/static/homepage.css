@@ -316,3 +316,26 @@ body {
 .comment-toggle-btn:active {
     box-shadow: .2rem .4rem .8rem rgba(0, 0, 0, .25);
 } 
+
+.comments-container {
+    display: none;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    max-height: 0;
+}
+
+.comments-container.show {
+    display: block;
+    max-height: 1000px; /* Ajustez cette valeur en fonction de la taille de vos commentaires */
+}
+
+.comment-form-container {
+    display: none;
+    transition: max-height 0.5s ease-out;
+    max-height: 0;
+}
+
+.comment-form-container.show {
+    display: block;
+    max-height: 500px; /* Ajustez cette valeur en fonction de la taille de votre formulaire */
+}
