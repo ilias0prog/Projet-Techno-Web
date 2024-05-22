@@ -7,11 +7,22 @@ from fastapi.templating import Jinja2Templates
 from app.schemas import *
 from Templates import *
 from app.login_manager import *
-from app.services import articles as articleService
+from app.services import articles as service
+from app.services.users import get_user_id_from_cookie, get_user_by_id
+from app.schemas.user import UserSchema
+
 
 
 templates = Jinja2Templates(directory="Librairie\Templates")
 router = APIRouter(prefix="/articles", tags=["articles"])
 
 
+@router.get("/homepage")
+def get_feed(request : Request, user: UserSchema = Depends(login_manager)):
+    # Fetch connected user info with cookie 
+    themes = user.interests.split(' ')
+
+    print(themes)
+    print(service.get_all_articles_by_themes(themes))
+    return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : service.get_all_articles_by_themes(themes), "user" : user})
 

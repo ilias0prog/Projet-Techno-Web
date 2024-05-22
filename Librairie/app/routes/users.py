@@ -30,7 +30,7 @@ def login_route( username: Annotated[str, Form()], password: Annotated[str,Form(
         access_token = login_manager.create_access_token(
             data={'sub': user.id}
         )
-        response = RedirectResponse(url="/books/all", status_code=302)
+        response = RedirectResponse(url="/articles/homepage", status_code=302)
         response.set_cookie(
             key=login_manager.cookie_name,
             value=access_token,
@@ -53,7 +53,7 @@ def login_route( username: Annotated[str, Form()], password: Annotated[str,Form(
         access_token = login_manager.create_access_token(
             data={'sub': user.id}
         )
-        response = RedirectResponse(url="/books/all", status_code=302)
+        response = RedirectResponse(url="/articles/homepage", status_code=302)
         response.set_cookie(
             key=login_manager.cookie_name,
             value=access_token,

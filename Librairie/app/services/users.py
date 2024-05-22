@@ -34,8 +34,6 @@ def get_user_by_id(id: str):
     with Session() as session:
         statement = select(User).filter_by(id=id)
         user = session.scalars(statement).one()
-        print("######################################################")
-        print(user)   
         #user = session.query(User).filter_by(id=id).first()
         if user is not None:
             return UserSchema(
@@ -45,6 +43,7 @@ def get_user_by_id(id: str):
                 name=user.name,
                 email=user.email,
                 password=user.password,
+                interests= user.interests,
                 admin=user.admin,
             )
     return None
@@ -129,7 +128,7 @@ def get_all_users():
             users_list.append(user_schema)
         
         return users_list
-    
+        
 
 def grant_admin(id : str):
     # promote admin the user with the given username
@@ -143,6 +142,5 @@ def grant_admin(id : str):
             return True 
         else:
             return False
-
 
 

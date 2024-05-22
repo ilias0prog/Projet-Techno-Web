@@ -9,5 +9,4 @@ login_manager.cookie_name = "auth_cookie"
 
 @login_manager.user_loader()
 def query_user(user_id: str):
-    print(get_user_by_id(user_id))
     return get_user_by_id(user_id)

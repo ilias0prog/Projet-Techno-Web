@@ -34,7 +34,25 @@ def get_all_articles_by_theme(theme :str):
                     date        = article.date,
                     content     = article.content,
                     theme       = article.theme,
-                    note        = article.note)
+                    likes       = article.likes,
+                    dislikes    = article.dislikes)
+                for article in articles_data]
+        
+
+def get_all_articles_by_themes(themes : list):
+        with Session() as session:
+            statement = select(Article).where(Article.theme in themes)
+            articles_data = session.scalars(statement).all()
+            return [
+                Article(
+                    id          = article.id,
+                    author_id   = article.author_id,
+                    title       = article.title,
+                    date        = article.date,
+                    content     = article.content,
+                    theme       = article.theme,
+                    likes       = article.likes,
+                    dislikes    = article.dislikes)
                 for article in articles_data]
         
 
