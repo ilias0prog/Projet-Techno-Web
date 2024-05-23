@@ -160,7 +160,7 @@ def fill_articles_db():
             return
         articles_data = [
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[0].username,
                     "title": "The Future of Technology",
                     "date": datetime.now(),
@@ -170,7 +170,7 @@ def fill_articles_db():
                     "dislikes": 1
                 },
                 {
-                    
+                    "id" : str(uuid4),
                     "author_username": users[1].username,
                     "title": "Health Benefits of Yoga",
                     "date": datetime.now(),
@@ -180,7 +180,7 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[2].username,
                     "title": "Political Landscape in 2024",
                     "date": datetime.now(),
@@ -190,7 +190,7 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[3].username,
                     "title": "Environmental Challenges",
                     "date": datetime.now(),
@@ -200,7 +200,7 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[4].username,
                     "title": "Economic Growth Post-Pandemic",
                     "date": datetime.now(),
@@ -210,7 +210,7 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[5].username,
                     "title": "Social Media and Society",
                     "date": datetime.now(),
@@ -220,7 +220,7 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[6].username,
                     "title": "International Relations in a Globalized World",
                     "date": datetime.now(),
@@ -230,7 +230,7 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[7].username,
                     "title": "The Cultural Significance of Art",
                     "date": datetime.now(),
@@ -240,7 +240,7 @@ def fill_articles_db():
                     "dislikes": 0
                 },
                 {
-                    
+                    "id": str(uuid4()),
                     "author_username": users[8].username,
                     "title": "The Evolution of Sports",
                     "date": datetime.now(),
@@ -253,6 +253,7 @@ def fill_articles_db():
         with Session() as session:
             for article_data in articles_data:
                 article = Article(
+                    id=article_data["id"],
                     author_username=article_data["author_username"],
                     title=article_data["title"],
                     date=article_data["date"],

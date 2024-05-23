@@ -19,16 +19,16 @@
         </label>
 
         <nav class="navbar">
-            <a href="/articles/homepage" style="--i:0;">Home</a>
+            <a href="/articles/homepage/user_themes/data" style="--i:0;">Home</a>
             <!-- <a href="#" style="--i:1;">Search <i class='bx bx-search' ></i></a> -->
             
             <a href="#" id="search-toggle" style="--i:1;">Search <i class='bx bx-search'></i></a>
             <div id="search-menu" class="search-menu" style="display: none;">
                 <label>
-                    <input type="radio" name="search-option" value="theme" onclick="toggleSearchOption('theme')"> By Theme
+                    <input class="navbar-search-option" type="radio" name="search-option" value="theme" onclick="toggleSearchOption('theme')"> By Theme
                 </label>
-                <label>
-                    <input type="radio" name="search-option" value="date" onclick="toggleSearchOption('date')"> By Date
+                <label> 
+                    <input class="navbar-search-option" type="radio" name="search-option" value="date" onclick="toggleSearchOption('date')"> By Date
                 </label>
                 <div id="search-theme" style="display: none;">
                     <select name="theme" id="search-article-theme">
@@ -49,15 +49,14 @@
                 <div id="search-date" style="display: none;">
                     <input type="date" id="search-article-date">
                 </div>
+                <button id="search-button" onclick="performSearch()"><i class='bx bx-search'></i></button>
             </div>
 
-            <a href="#" style="--i:2;">I Share</a>
+            <a href="/articles/create" style="--i:2;">I Share</a>
             <a href="#" style="--i:3;">My articles</a>
             <a href="#" style="--i:4;">My Profile</a>
         </nav>
     </header>
-
-    <h1 class="new-article-header">Write your own article :</h1>
 
     <div class="new-article-container">
         <form class="new-article-form" method="post" action="/articles/create" >
@@ -114,6 +113,37 @@ document.addEventListener('click', function(event) {
         searchMenu.style.display = 'none';
     }
 });
+
+
+// Search menu part :
+
+
+function toggleSearchOption(option) {
+    document.getElementById('search-theme').style.display = option === 'theme' ? 'block' : 'none';
+    document.getElementById('search-date').style.display = option === 'date' ? 'block' : 'none';
+}
+
+function performSearch() {
+    const selectedOption = document.querySelector('input[name="search-option"]:checked').value;
+    if (selectedOption === 'theme') {
+        const theme = document.getElementById('search-article-theme').value;
+        if (theme) {
+            window.location.href = `/articles/homepage/search_theme/${theme}`;
+        } else {
+            alert('Please select a theme.');
+        }
+    } else if (selectedOption === 'date') {
+        const date = document.getElementById('search-article-date').value;
+        if (date) {
+            window.location.href = `/articles/homepage/search_date/${date}`;
+        } else {
+            alert('Please select a date.');
+        }
+    } else {
+        alert('Please select a search option.');
+    }
+}
+
 
 </script>
 

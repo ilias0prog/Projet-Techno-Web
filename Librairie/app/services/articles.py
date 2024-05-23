@@ -44,14 +44,30 @@ def get_all_articles_by_themes(themes: list):
         articles_data = session.execute(statement).scalars().all()
         return [
             Article(
-                id=article.id,
-                author_username   = article.author_username,
-                title=article.title,
-                date= article.date,
-                content=article.content,
-                theme=article.theme,
-                likes=article.likes,
-                dislikes=article.dislikes)
+                id              =article.id,
+                author_username = article.author_username,
+                title           =article.title,
+                date            = article.date,
+                content         =article.content,
+                theme           =article.theme,
+                likes           =article.likes,
+                dislikes        =article.dislikes)
+            for article in articles_data]
+    
+def get_all_articles_by_date(data):
+    with Session() as session:
+        statement = select(Article).where(Article.date == data)
+        articles_data = session.execute(statement).scalars().all()
+        return [
+            Article(
+                id              =article.id,
+                author_username =article.author_username,
+                title           =article.title,
+                date            = article.date,
+                content         =article.content,
+                theme           =article.theme,
+                likes           =article.likes,
+                dislikes        =article.dislikes)
             for article in articles_data]
     
 

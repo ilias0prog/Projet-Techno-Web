@@ -11,25 +11,44 @@ from app.services import articles as service
 from app.services.users import get_user_by_id
 from app.services.comments import *
 from app.schemas.user import UserSchema
+from app.schemas.article import ArticleSchema
 from app.schemas.comment import CommentSchema
 from app.services.comments import *
-
+from uuid import uuid4
+from datetime import datetime
+from app.models.usersandarticles import Article, Comment, User
 
 
 templates = Jinja2Templates(directory="Librairie\Templates")
 router = APIRouter(prefix="/articles", tags=["articles"])
 
 
-@router.get("/homepage")
-def get_feed(request : Request, user: UserSchema = Depends(login_manager)):
-    # Fetch connected user info with cookie 
-    themes = user.interests.split(' ')
-    articles = service.get_all_articles_by_themes(themes)
+# @router.get("/homepage")
+# def get_feed(request : Request, user: UserSchema = Depends(login_manager)):
+#     # Fetch connected user info with cookie 
+#     themes = user.interests.split(' ')
+#     articles = service.get_all_articles_by_themes(themes)
 
-    # comments = []
-    # for article in articles:
-    #     for comment in get_comments_by_article(article.id):
-    #         comments.append[comment]
+#     # comments = []
+#     # for article in articles:
+#     #     for comment in get_comments_by_article(article.id):
+#     #         comments.append[comment]
+#     comments = {}
+#     for article in articles:
+#         comments[article.id] = get_comments_by_article(article.id)
+
+#     return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : articles, "user" : user, "comments" : comments})
+
+@router.get("/homepage/{filter}/{data}")
+def get_feed(request : Request, filter : str, data :str,  user: UserSchema = Depends(login_manager)):
+    # Fetch connected user info with cookie 
+    if filter == 'search_theme':
+        articles = service.get_all_articles_by_themes([data])
+    elif filter == 'search_date':
+        articles = service.get_all_articles_by_date(data)
+    else:
+        themes = user.interests.split(' ')
+        articles = service.get_all_articles_by_themes(themes)
     comments = {}
     for article in articles:
         comments[article.id] = get_comments_by_article(article.id)
@@ -55,11 +74,13 @@ async def post_comment(request: Request, content: str, article_id: str, user: Us
 @router.get("/create")
 def create_article(request : Request, user: UserSchema = Depends(login_manager)):
     return templates.TemplateResponse("/create_article.html", context = {"request" : request, "user" : user})
+
 @router.post("/create")
-def create_article(request : Request, title: str = Form(...), content: str = Form(...), theme: str = Form(...), user: UserSchema = Depends(login_manager)):
-    article = ArticleSchema(title=title, content=content, theme=theme, author=user.username)
+def create_article( title: str = Form(...), content: str = Form(...), theme: str = Form(...), user: UserSchema = Depends(login_manager)):
+    
+    article = ArticleSchema(id = str(uuid4()),author_username= user.username, title=title, date = datetime.now().date(), content=content , theme=theme)
     service.add_article(article)
-    return RedirectResponse(url="/articles/homepage")
+    return RedirectResponse(url="/articles/homepage/user_themes/data")
 
 @router.get("/edit/{article_id}")
 def edit_article(request : Request, article_id: str, user: UserSchema = Depends(login_manager)):
@@ -67,8 +88,8 @@ def edit_article(request : Request, article_id: str, user: UserSchema = Depends(
     return templates.TemplateResponse("/edit_article.html", context = {"request" : request, "article" : article, "user" : user})
 
 @router.post("/edit/{article_id}")
-def edit_article(request : Request, article_id: str, title: str = Form(...), content: str = Form(...), theme: str = Form(...), user: UserSchema = Depends(login_manager)):
-    article = ArticleSchema(title=title, content=content, theme=theme, author=user.username)
+def edit_article( article_id: str, title: str = Form(...), content: str = Form(...), theme: str = Form(...), user: UserSchema = Depends(login_manager)):
+    article = Article(title=title, content=content, theme=theme, author=user.username)
     service.update_article(article_id, article)
     return RedirectResponse(url="/articles/homepage")
 
@@ -78,7 +99,7 @@ def delete_article(request : Request, article_id: str, user: UserSchema = Depend
     return RedirectResponse(url="/articles/homepage")
 
 @router.post("/delete/{article_id}")
-def delete_article(request : Request, article_id: str, user: UserSchema = Depends(login_manager)):
+def delete_article( article_id: str, user: UserSchema = Depends(login_manager)):
     service.delete_article(article_id)
     return RedirectResponse(url="/articles/homepage")
 

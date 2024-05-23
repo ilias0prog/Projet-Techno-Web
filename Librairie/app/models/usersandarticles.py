@@ -8,33 +8,30 @@ from app.database import Base
 class User(Base):
     __tablename__ = 'users' 
 
-    id = Column(String(72), primary_key=True)
-    username = Column(String(72), unique=True)
-    firstname = Column(String(72))
-    name = Column(String(72))
-    email = Column(String(72), unique=True)
-    password = Column(String(72))
-    interests = Column(String(72), nullable=True)
-    admin = Column(Boolean(), default=False)
+    id : Mapped[str] = mapped_column(String(72), primary_key=True)
+    username : Mapped[str] = mapped_column(String(72), unique=True)
+    firstname : Mapped[str] = mapped_column(String(72))
+    name : Mapped[str] = mapped_column(String(72))
+    email : Mapped[str] = mapped_column(String(72), unique=True)
+    password : Mapped[str] = mapped_column(String(72))
+    interests : Mapped[List[str]] = mapped_column((String(64)), nullable=True)
+    admin : Mapped[bool] = mapped_column(Boolean, default=False)
     articles: Mapped[List["Article"]] = relationship("Article", back_populates="author")
     comments = relationship("Comment", back_populates="author")
     
 class Article(Base):
     __tablename__ = 'articles' 
 
-    id = Column(Integer, primary_key=True)
-    author_username = Column(String(72), ForeignKey("users.username"))  # Clé étrangère vers la colonne username de la table users
-    title = Column(String, nullable=False)
-    date = Column(Date)
-    content = Column(String(1024))
-    theme = Column(String(64))
-    likes = Column(Integer)
-    dislikes = Column(Integer)
+    id              : Mapped[str] = mapped_column(String(72), primary_key=True)
+    author_username : Mapped[str] = mapped_column(String(72), ForeignKey("users.username"), nullable=False)
+    title           : Mapped[str] = mapped_column(String(72))
+    date                          = Column(Date)
+    content         : Mapped[str] = mapped_column(String(1024))
+    theme           : Mapped[str] = mapped_column(String(72))
+    likes           : Mapped[int] = mapped_column(Integer, default=0)
+    dislikes        : Mapped[int] = mapped_column(Integer, default=0)
     #author = relationship("User", foreign_keys=[author_id, author_username])
-
     author = relationship("User", back_populates="articles")
-
- 
     comments: Mapped[List["Comment"]] = relationship( "Comment", back_populates="article")
     __table_args__ = (
         CheckConstraint('theme IN ("sport", "culture", "music", "cinema", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),
@@ -44,10 +41,12 @@ class Article(Base):
 
 class Comment(Base):
     __tablename__ = 'comments'
-    author_id = Column(String(72), ForeignKey("users.id"), primary_key = True ) 
-    article_id = Column(Integer, ForeignKey("articles.id"), primary_key = True )
-    content = Column(String(1024))
+    author_id      : Mapped[str] = mapped_column(String(72), ForeignKey("users.id"), primary_key = True)
+    article_id     : Mapped[str] = mapped_column(String(72), ForeignKey("articles.id"), primary_key = True)
+    content        : Mapped[str] = mapped_column(String(1024))
     article = relationship("Article", back_populates="comments")
     author = relationship("User", back_populates="comments")
     __table_args__ = (
         UniqueConstraint('author_id', 'article_id', name='uq_author_article'),)
+    
+
