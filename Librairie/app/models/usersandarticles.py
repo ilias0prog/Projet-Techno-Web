@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Boolean, Column, ARRAY, INTEGER
 from typing import List
-from sqlalchemy import String, Boolean, Column, Integer, ForeignKey, CheckConstraint, DateTime, UniqueConstraint
+from sqlalchemy import String, Boolean, Column, Integer, ForeignKey, CheckConstraint, Date, UniqueConstraint
 from app.database import Base
 
 
@@ -25,7 +25,7 @@ class Article(Base):
     id = Column(Integer, primary_key=True)
     author_username = Column(String(72), ForeignKey("users.username"))  # Clé étrangère vers la colonne username de la table users
     title = Column(String, nullable=False)
-    date = Column(DateTime)
+    date = Column(Date)
     content = Column(String(1024))
     theme = Column(String(64))
     likes = Column(Integer)

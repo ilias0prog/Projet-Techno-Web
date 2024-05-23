@@ -23,7 +23,7 @@
         <nav class="navbar">
             <a href="/articles/homepage" style="--i:0;">Home</a>
             <a href="#" style="--i:1;">Search <i class='bx bx-search' ></i></a>
-            <a href="#" style="--i:2;">I Share</a>
+            <a href="/articles/create" style="--i:2;">I Share</a>
             <a href="#" style="--i:3;">My articles</a>
             <a href="#" style="--i:4;">My Profile</a>
         </nav>
@@ -31,14 +31,7 @@
 
     <div class="feed-container">
         {% for article in articles %}
-        {{ show_article(article.id, article.author_username, article.title, article.date, article.content, article.theme, article.likes, article.dislikes, article) }}
-        <div class="comment-form-container" id="comment-form-{{ article.id }}">
-            <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article.id }})">
-                <textarea name="comment" placeholder="Write your comment" required></textarea>
-                <input type="hidden" name="article_id" value="{{ article.id }}">
-                <button type="submit">Post Comment</button>
-            </form>
-        </div>
+        {{ show_article(article.id, article.author_username, article.title, article.date, article.content, article.theme, article.likes, article.dislikes, article, comments) }}
         {% endfor %}
     </div>
 </body>

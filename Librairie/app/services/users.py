@@ -143,4 +143,30 @@ def grant_admin(id : str):
         else:
             return False
 
-
+def update_user(id: str ,username: str, firstname: str, name: str,email: str, password: str, interests: str):
+    # Updates the user with the given username
+    with Session() as session:
+        statement = select(User).filter_by(id=id)
+        user = session.scalars(statement).one()
+        if user is not None:
+            user.username = username
+            user.firstname = firstname
+            user.name = name
+            user.email = email
+            user.password = password
+            user.interests = interests
+            session.commit()
+            return True
+        else:
+            return False
+def delete_user(id: str):
+    # Deletes the user with the given username
+    with Session() as session:
+        statement = select(User).filter_by(id=id)
+        user = session.scalars(statement).one()
+        if user is not None:
+            session.delete(user)
+            session.commit()
+            return True
+        else:
+            return False

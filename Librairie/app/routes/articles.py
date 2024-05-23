@@ -92,7 +92,7 @@ def get_my_articles(request : Request, user: UserSchema = Depends(login_manager)
 def search_articles(request : Request, user: UserSchema = Depends(login_manager)):
     return templates.TemplateResponse("/search_articles.html", context = {"request" : request, "user" : user})
 
-@router.post("/search")
-def search_articles(request : Request, title: str = Form(...), user: UserSchema = Depends(login_manager)):
-    articles = service.get_articles_by_title(date) or 
-    return templates.TemplateResponse("/search_articles.html", context = {"request" : request, "articles" : articles, "user" : user})
+# @router.post("/search")
+# def search_articles(request : Request, title: str = Form(...), user: UserSchema = Depends(login_manager)):
+#     articles = service.get_articles_by_title(date) or 
+#     return templates.TemplateResponse("/search_articles.html", context = {"request" : request, "articles" : articles, "user" : user})

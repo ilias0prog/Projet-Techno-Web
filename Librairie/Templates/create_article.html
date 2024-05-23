@@ -1,5 +1,120 @@
-{% extends "empty_page.html" %}
-{% block title %}Créer un article{% endblock %}
-{% block content %}
-   
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write a new article</title>
+    <link rel="stylesheet" href="../static/homepage.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">WeShare</a>
+
+        <input type="checkbox" id="check">
+
+        <label for="check" class="icons">
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <i class='bx bx-x' id="close-icon"></i>
+        </label>
+
+        <nav class="navbar">
+            <a href="/articles/homepage" style="--i:0;">Home</a>
+            <!-- <a href="#" style="--i:1;">Search <i class='bx bx-search' ></i></a> -->
+            
+            <a href="#" id="search-toggle" style="--i:1;">Search <i class='bx bx-search'></i></a>
+            <div id="search-menu" class="search-menu" style="display: none;">
+                <label>
+                    <input type="radio" name="search-option" value="theme" onclick="toggleSearchOption('theme')"> By Theme
+                </label>
+                <label>
+                    <input type="radio" name="search-option" value="date" onclick="toggleSearchOption('date')"> By Date
+                </label>
+                <div id="search-theme" style="display: none;">
+                    <select name="theme" id="search-article-theme">
+                        <option value="" disabled selected>Choose a theme</option>
+                        <option value="sport">Sport</option>
+                        <option value="culture">Culture</option>
+                        <option value="music">Music</option>
+                        <option value="cinema">Cinema</option>
+                        <option value="politics">Politics</option>
+                        <option value="economics">Economics</option>
+                        <option value="health">Health</option>
+                        <option value="environment">Environment</option>
+                        <option value="social">Social</option>
+                        <option value="technology">Technology</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
+                <div id="search-date" style="display: none;">
+                    <input type="date" id="search-article-date">
+                </div>
+            </div>
+
+            <a href="#" style="--i:2;">I Share</a>
+            <a href="#" style="--i:3;">My articles</a>
+            <a href="#" style="--i:4;">My Profile</a>
+        </nav>
+    </header>
+
+    <h1 class="new-article-header">Write your own article :</h1>
+
+    <div class="new-article-container">
+        <form class="new-article-form" method="post" action="/articles/create" >
+            <input type="text" name="title" id="new-article-title" placeholder="Title of your article">
+            <select name="theme" id="new-article-theme" required>
+                <option value="" disabled selected>What is it about ?</option>
+                <option value="sport">Sport</option>
+                <option value="culture">Culture</option>
+                <option value="music">Music</option>
+                <option value="cinema">Cinema</option>
+                <option value="politics">Politics</option>
+                <option value="economics">Economics</option>
+                <option value="health">Health</option>
+                <option value="environment">Environment</option>
+                <option value="social">Social</option>
+                <option value="technology">Technology</option>
+                <option value="international">International</option>
+            </select>
+            <!-- <input type="date" name="date" id="new-article-date"> -->
+            <textarea name="content" id="new-article-content" placeholder="Write your article here" required maxlength="1024"></textarea>
+            
+            <button class="new-article-submit-button" id="new-article-submit-button" type="submit"><i class='bx bx-send' ></i></button>
+        </form>
+    </div>
+</body>
+
+<script>
+    document.getElementById('search-toggle').addEventListener('click', function(event) {
+    event.preventDefault();
+    var searchMenu = document.getElementById('search-menu');
+    if (searchMenu.style.display === 'none' || searchMenu.style.display === '') {
+        searchMenu.style.display = 'block';
+    } else {
+        searchMenu.style.display = 'none';
+    }
+});
+
+function toggleSearchOption(option) {
+    var searchTheme = document.getElementById('search-theme');
+    var searchDate = document.getElementById('search-date');
+    if (option === 'theme') {
+        searchTheme.style.display = 'block';
+        searchDate.style.display = 'none';
+    } else if (option === 'date') {
+        searchTheme.style.display = 'none';
+        searchDate.style.display = 'block';
+    }
+}
+
+document.addEventListener('click', function(event) {
+    var searchMenu = document.getElementById('search-menu');
+    var searchToggle = document.getElementById('search-toggle');
+    if (!searchMenu.contains(event.target) && !searchToggle.contains(event.target)) {
+        searchMenu.style.display = 'none';
+    }
+});
+
+</script>
+
+</html>

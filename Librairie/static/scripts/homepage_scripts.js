@@ -1,24 +1,13 @@
-// Fonction pour basculer l'affichage des commentaires
-function toggleComments(articleId) {
-    console.log('Article ID:', articleId);
-    const commentsContainer = document.getElementById(`comments-container-${articleId}`);
-    if (commentsContainer.style.display === "none") {
-        commentsContainer.style.display = "block";
-    } else {
-        commentsContainer.style.display = "none";
-    }
+function toggleComments(article_id) {
+    const commentsContainer = document.getElementById(`comments-container-${article_id}`);
+    commentsContainer.classList.toggle('show');
 }
 
-// Fonction pour basculer l'affichage du formulaire de commentaire
-function toggleCommentForm(articleId) {
-    console.log('Article ID:', articleId);
-    const commentFormContainer = document.getElementById(`comment-form-${articleId}`);
-    if (commentFormContainer.style.display === "none") {
-        commentFormContainer.style.display = "block";
-    } else {
-        commentFormContainer.style.display = "none";
-    }
+function toggleCommentForm(article_id) {
+    const commentFormContainer = document.getElementById(`comment-form-${article_id}`);
+    commentFormContainer.classList.toggle('show');
 }
+
 
 function postComment(event, articleId) {
     event.preventDefault();

@@ -47,12 +47,17 @@ def get_all_articles_by_themes(themes: list):
                 id=article.id,
                 author_username   = article.author_username,
                 title=article.title,
-                date=article.date,
+                date= article.date,
                 content=article.content,
                 theme=article.theme,
                 likes=article.likes,
                 dislikes=article.dislikes)
             for article in articles_data]
+    
+
+# def change_date_format(date : str):
+#     date_list = date.split('-')
+#     return f'{date_list[2]}.{date_list[1]}.{date_list[0]}'
 
         
 

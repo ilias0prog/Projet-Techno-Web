@@ -79,7 +79,7 @@ def logout_route():
     return response
 
 
-@router.get("/me")
+@router.get("/myprofile")
 def current_user_route(request : Request, user: UserSchema = Depends(login_manager)):
     
     return templates.TemplateResponse("user.html", context={"request": request,"user": user})
@@ -107,4 +107,24 @@ def admin_form(request: Request):
 def admin_action(id: Annotated[str, Form()]):
     service.grant_admin(id)
     response = RedirectResponse(url="/users/admin", status_code=302)
+    return response
+
+@router.get("/updateprofile/{user.id}")
+def update_form(request: Request, user: UserSchema):
+    return templates.TemplateResponse("/updateprofile.html", context={"request": request, "user": user})
+
+@router.post("/updateprofile/{user.id}")
+def update_action(id: Annotated[str, Form()], username: Annotated[str, Form()], firstname: Annotated[str, Form()], name: Annotated[str, Form()], email: Annotated[str, Form()], password: Annotated[str, Form()], interests: Annotated[str, Form()]):
+    service.update_user(id, username, firstname, name, email, password, interests)
+    response = RedirectResponse(url="/users/myprofile", status_code=302)
+    return response
+
+@router.get("/delete/{user.id}")
+def delete_form(request: Request, user: UserSchema):
+    return templates.TemplateResponse("/delete.html", context={"request": request, "user": user})
+
+@router.post("/delete/{user.id}")
+def delete_action(id: Annotated[str, Form()]):
+    service.delete_user(id)
+    response = RedirectResponse(url="/users/myprofile", status_code=302)
     return response

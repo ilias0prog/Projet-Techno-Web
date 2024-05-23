@@ -1,4 +1,4 @@
-{% macro show_article(article_id, author_username, title, date, content, theme, likes, dislikes, article, comments) %}
+{% macro show_article(article_id, author_username, title, date, content, theme, likes, dislikes, article, article_comments) %}
 <div class="news-card">
     <div class="card-infos">
         <i class='bx bx-user-circle' id="card-profilepicture"></i>
@@ -21,28 +21,32 @@
         {% elif theme == "social"%}
         <i class='bx bxl-meta' id="card-logo"></i>
         {% endif %}
-        <h3 class="card-date">{{ date.strftime("%d.%m.%Y") }}</h3>
+        <h3 class="card-date">{{ date }}</h3>
     </div>
     <h1 class="card-title">{{ title }}</h1>
     <p class="card-article">{{ content }}</p>
 
-    <button class="comment-toggle-btn" onclick="toggleComments({{ article.id }})"><i class='bx bx-comment'></i></button>
+    <button class="comment-toggle-btn" onclick="toggleComments({{ article_id }})"><i class='bx bx-comment'></i></button>
 
-    <div class="comments-container" id="comments-container-{{ article_id }}" style="display: none;">
-        {% for comment in comments %}
-            {{ show_comment(comment.id, comment.author_id, comment.date, comment.content, comment.likes, comment.dislikes) }}
-        {% endfor %}
-
-        <button class="comment-form-toggle-btn" onclick="toggleCommentForm({{ article.id }})">Write a Comment</button>
-
-        <div class="comment-form-container" id="comment-form-{{ article_id }}" style="display: none;">
-            <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article_id }})">
-                <textarea name="comment" placeholder="Write your comment" required></textarea>
-                <input type="hidden" name="article_id" value="{{ article_id }}">
-                <button type="submit"><i class='bx bx-send'></i> Post</button>
-            </form>
+<div class="comments-container" id="comments-container-{{ article_id }}">
+    {% for comment in article_comments %}
+        <div class="comment">
+            <p><strong>{{ comment.author_id }}</strong></p>
+            <p>{{ comment.content }}</p>
         </div>
+    {% endfor %}
+
+    <button class="comment-form-toggle-btn" onclick="toggleCommentForm({{ article_id }})">Write a Comment</button>
+
+    <div class="comment-form-container" id="comment-form-{{ article_id }}" style="display: none;">
+        <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article_id }})">
+            <textarea name="comment" placeholder="Write your comment" required></textarea>
+            <input type="hidden" name="article_id" value="{{ article_id }}">
+            <button type="submit"><i class='bx bx-send'></i> Post</button>
+        </form>
     </div>
+</div>
+
 </div>
 {% endmacro %}
 
@@ -55,7 +59,7 @@
     <div class="card-infos">
         <i class='bx bx-user-circle' id="card-profilepicture"></i><h3 class="card-username">{{ author_name }}</h3>
         <h2 class="card-theme">{{ theme }}</h2>
-        <h3 class="card-date">{{ date.strftime("%d.%m.%Y") }}</h3>
+        <h3 class="card-date">{{ date }}</h3>
     </div>
     <h1 class="card-title">{{ title }}</h1>
     <p class="card-article">{{ content }}</p>

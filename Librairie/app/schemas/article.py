@@ -8,4 +8,4 @@ class ArticleSchema(BaseModel):
     date :       str
     content :    str
     theme :      str
-    note :       int
+   
