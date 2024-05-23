@@ -6,6 +6,8 @@
         <h2 class="card-theme">{{ theme }}</h2>
         {% if theme == "sport"%}
         <i class='bx bx-basketball' id="card-logo"></i>
+        {% elif theme == "music"%}
+        <i class='bx bxs-music' id="card-logo"></i>
         {% elif theme == "culture"%}
         <i class='bx bxs-music' id="card-logo"></i>
         {% elif theme == "cinema"%}
@@ -24,14 +26,14 @@
     <h1 class="card-title">{{ title }}</h1>
     <p class="card-article">{{ content }}</p>
 
-    <button class="comment-toggle-btn" onclick="toggleComments({{ article_id }})">Show Comments</button>
+    <button class="comment-toggle-btn" onclick="toggleComments({{ article.id }})"><i class='bx bx-comment'></i></button>
 
     <div class="comments-container" id="comments-container-{{ article_id }}" style="display: none;">
         {% for comment in comments %}
             {{ show_comment(comment.id, comment.author_id, comment.date, comment.content, comment.likes, comment.dislikes) }}
         {% endfor %}
 
-        <button class="comment-form-toggle-btn" onclick="toggleCommentForm({{ article_id }})">Write a Comment</button>
+        <button class="comment-form-toggle-btn" onclick="toggleCommentForm({{ article.id }})">Write a Comment</button>
 
         <div class="comment-form-container" id="comment-form-{{ article_id }}" style="display: none;">
             <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article_id }})">

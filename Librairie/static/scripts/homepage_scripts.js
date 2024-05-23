@@ -1,29 +1,48 @@
+// Fonction pour basculer l'affichage des commentaires
 function toggleComments(articleId) {
+    console.log('Article ID:', articleId);
     const commentsContainer = document.getElementById(`comments-container-${articleId}`);
-    if (commentsContainer.style.display === "none" || commentsContainer.style.display === "") {
+    if (commentsContainer.style.display === "none") {
         commentsContainer.style.display = "block";
     } else {
         commentsContainer.style.display = "none";
     }
 }
 
+// Fonction pour basculer l'affichage du formulaire de commentaire
 function toggleCommentForm(articleId) {
-    const formContainer = document.getElementById(`comment-form-${articleId}`);
-    if (formContainer.style.display === "none" || formContainer.style.display === "") {
-        formContainer.style.display = "block";
+    console.log('Article ID:', articleId);
+    const commentFormContainer = document.getElementById(`comment-form-${articleId}`);
+    if (commentFormContainer.style.display === "none") {
+        commentFormContainer.style.display = "block";
     } else {
-        formContainer.style.display = "none";
+        commentFormContainer.style.display = "none";
     }
 }
 
-async function postComment(event, articleId) {
+function postComment(event, articleId) {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
-    const response = await fetch('/post_comment', {
-        method: 'POST',
-        body: formData
-    });
+
+    fetch(`/post_comment`, {
+        method: "POST",
+        body: formData,
+    })
+    .then(response => response.json())
+    .then(comment => {
+        const commentsContainer = document.getElementById(`comments-container-${articleId}`);
+        commentsContainer.innerHTML += `
+            <div class="comment">
+                <p><strong>${comment.author_id}</strong> ${new Date(comment.date).toLocaleString()}</p>
+                <p>${comment.content}</p>
+            </div>
+        `;
+        form.reset();
+        toggleCommentForm(articleId);
+    })
+    .catch(error => console.error("Error posting comment:", error));
+}
 
     if (response.ok) {
         const comment = await response.json();

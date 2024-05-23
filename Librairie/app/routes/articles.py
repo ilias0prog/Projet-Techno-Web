@@ -26,20 +26,31 @@ def get_feed(request : Request, user: UserSchema = Depends(login_manager)):
     themes = user.interests.split(' ')
     articles = service.get_all_articles_by_themes(themes)
 
-    print(themes)
-    print(service.get_all_articles_by_themes(themes))
-    return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : articles, "user" : user})
+    # comments = []
+    # for article in articles:
+    #     for comment in get_comments_by_article(article.id):
+    #         comments.append[comment]
+    comments = {}
+    for article in articles:
+        comments[article.id] = get_comments_by_article(article.id)
 
-@router.post("/load_comments/")
+    return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : articles, "user" : user, "comments" : comments})
+
+@router.post("/load_comments")
 async def load_comments(article_id: int):
     comments = get_comments_by_article(article_id)
     return {"comments": comments}
 
+# @router.post("/post_comment")
+# async def post_comment(request : Request, content : str, article_id : str, user : UserSchema = Depends(login_manager)):
+#     comment = CommentSchema(author_id=user.id, article_id=article_id, content = content)
+#     add_comment(content, article_id, user.id)
+#     return comment
+
 @router.post("/post_comment")
-async def post_comment(request : Request, content : str, article_id : str, user : UserSchema = Depends(login_manager)):
-    comment = CommentSchema(author_id=user.id, article_id=article_id, content = content)
+async def post_comment(request: Request, content: str, article_id: str, user: UserSchema = Depends(login_manager)):
     add_comment(content, article_id, user.id)
-    return comment
+    return {"status": "success", "message": "Comment added successfully"}
 
 @router.get("/create")
 def create_article(request : Request, user: UserSchema = Depends(login_manager)):
@@ -66,9 +77,22 @@ def delete_article(request : Request, article_id: str, user: UserSchema = Depend
     service.delete_article(article_id)
     return RedirectResponse(url="/articles/homepage")
 
-@router.post("delete/{article_id}")
+@router.post("/delete/{article_id}")
 def delete_article(request : Request, article_id: str, user: UserSchema = Depends(login_manager)):
     service.delete_article(article_id)
     return RedirectResponse(url="/articles/homepage")
 
 
+@router.get("/myarticles")
+def get_my_articles(request : Request, user: UserSchema = Depends(login_manager)):
+    articles = service.get_all_articles_by_author(user.username)
+    return templates.TemplateResponse("/my_articles.html", context = {"request" : request, "articles" : articles, "user" : user})
+
+@router.get("/search")
+def search_articles(request : Request, user: UserSchema = Depends(login_manager)):
+    return templates.TemplateResponse("/search_articles.html", context = {"request" : request, "user" : user})
+
+@router.post("/search")
+def search_articles(request : Request, title: str = Form(...), user: UserSchema = Depends(login_manager)):
+    articles = service.get_articles_by_title(date) or 
+    return templates.TemplateResponse("/search_articles.html", context = {"request" : request, "articles" : articles, "user" : user})

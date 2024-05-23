@@ -5,7 +5,7 @@ from app.database import Session
 from sqlalchemy import select
 from app.services.users import get_user_id_from_cookie
 
-def add_comment(article_id: str, comment_data: str):
+def add_comment2(article_id: str, comment_data: str):
     # Trouver l'id du user connecté (cookie)
     user_id = get_user_id_from_cookie()  # Assuming there is a function to get user id from cookie
 
@@ -27,6 +27,7 @@ def add_comment(article_id: str, comment_data: str):
 #def upadte_comment(article_id : str, article: ArticleSchema):
 
 def get_comments_by_article(article_id : str):
+    # Returns a list
     with Session() as session:
         statement = select(Comment).where(Comment.article_id == article_id)
         comments = session.execute(statement).scalars().all()

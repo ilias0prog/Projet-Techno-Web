@@ -21,22 +21,21 @@ def get_all_articles():
             for article in articles_data]
         
         
-def get_all_articles_by_theme(theme :str):
-    if theme in ("sport", "culture", "politics", "economics", "health", "environment", "social", "technology", "international"):
-        with Session() as session:
-            statement = select(Article).where(Article.theme == theme)
-            articles_data = session.scalars(statement).all()
-            return [
-                Article(
-                    id          = article.id,
-                    author_username   = article.author_username,
-                    title       = article.title,
-                    date        = article.date,
-                    content     = article.content,
-                    theme       = article.theme,
-                    likes       = article.likes,
-                    dislikes    = article.dislikes)
-                for article in articles_data]
+def get_all_articles_by_author(user):
+    with Session() as session:
+        statement = select(Article).where(Article.author_username == user.username)
+        articles_data = session.scalars(statement).all()
+        return [
+            Article(
+                id          = article.id,
+                author_username   = article.author_username,
+                title       = article.title,
+                date        = article.date,
+                content     = article.content,
+                theme       = article.theme,
+                likes       = article.likes,
+                dislikes    = article.dislikes)
+            for article in articles_data]
         
 
 def get_all_articles_by_themes(themes: list):
