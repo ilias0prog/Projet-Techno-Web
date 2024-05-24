@@ -7,6 +7,7 @@
     <title>My website</title>
     <link rel="stylesheet" href="/static/main_style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/static/scripts/homepage_scripts.js">
 </head>
 <body>
 
@@ -22,7 +23,6 @@
 
     <nav class="navbar">
         <a href="/articles/homepage/user_themes/data" style="--i:0;">Home</a>
-        <!-- <a href="#" style="--i:1;">Search <i class='bx bx-search' ></i></a> -->
         
         <a href="#" id="search-toggle" style="--i:1;">Search <i class='bx bx-search'></i></a>
         <div id="search-menu" class="search-menu" style="display: none;">
@@ -67,7 +67,7 @@
     </div>
 
     <script>
-        document.getElementById('search-toggle').addEventListener('click', function(event) {
+    document.getElementById('search-toggle').addEventListener('click', function(event) {
     event.preventDefault();
     var searchMenu = document.getElementById('search-menu');
     if (searchMenu.style.display === 'none' || searchMenu.style.display === '') {
@@ -128,45 +128,158 @@ function performSearch() {
 }
 
 // like and dislike part : 
-// Fonction pour incrémenter ou décrémenter la valeur d'un bouton
-function toggleButton(button, countElement) {
-    var count = parseInt(countElement.innerText);
-    if (button.classList.contains("active")) {
-        countElement.innerText = count - 1;
-        button.classList.remove("active");
+
+// function toggleCheckbox(className) {
+//     const checkbox = document.querySelector(`.${className}`);
+//     checkbox.checked = !checkbox.checked;
+// }
+function toggleCheckbox(className) {
+    // Sélectionne la case à cocher en fonction de sa classe
+    var checkbox = document.querySelector('.' + className);
+
+    // Vérifie si la case à cocher est cochée
+    if (checkbox.checked) {
+        // Désélectionne l'autre case à cocher si elle est cochée
+        var otherCheckboxClass = className === 'like_checkbox' ? 'dislike_checkbox' : 'like_checkbox';
+        var otherCheckbox = document.querySelector('.' + otherCheckboxClass);
+        if (otherCheckbox.checked) {
+            otherCheckbox.checked = false;
+            // Met à jour le style de l'autre case à cocher si nécessaire
+            updateCheckboxStyle(otherCheckbox);
+        }
+    }
+
+    // Met à jour le style de la case à cocher
+    updateCheckboxStyle(checkbox);
+}
+
+function updateCheckboxStyle(checkbox) {
+    // Sélectionne le span contenant le nombre de likes ou dislikes
+    var countSpan = checkbox.parentElement.querySelector('.' + checkbox.className + '_count');
+
+    // Vérifie si la case à cocher est cochée
+    if (checkbox.checked) {
+        // Si cochée, change la couleur et la taille du bouton
+        checkbox.parentElement.style.backgroundColor = checkbox.className === 'like_checkbox' ? 'rgba(95, 165, 201, 0.9)' : 'rgba(250, 148, 97, 0.9)'; // Couleur plus claire
+        checkbox.parentElement.style.transform = 'scale(1.1)'; // Taille augmentée
+        checkbox.parentElement.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.3)'; // Box-shadow
+        // Incrémente la valeur de la case à cocher de 1
+        countSpan.innerText = parseInt(countSpan.innerText) + 1;
     } else {
-        countElement.innerText = count + 1;
-        button.classList.add("active");
+        // Si décochée, restaure la couleur et la taille du bouton
+        checkbox.parentElement.style.backgroundColor = ''; // Couleur par défaut
+        checkbox.parentElement.style.transform = ''; // Taille par défaut
+        checkbox.parentElement.style.boxShadow = ''; // Box-shadow par défaut
+        // Décrémente la valeur de la case à cocher de 1
+        countSpan.innerText = parseInt(countSpan.innerText) - 1;
     }
 }
 
-// Fonction pour attacher les événements de clic aux boutons de like et de dislike
-function attachButtonEvents() {
-    var likeButtons = document.querySelectorAll(".like_button");
-    var dislikeButtons = document.querySelectorAll(".dislike_button");
 
-    likeButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            var countElement = button.querySelector(".like_count");
-            toggleButton(button, countElement);
-        });
-    });
 
-    dislikeButtons.forEach(function(button) {
-        button.addEventListener("click", function() {
-            var countElement = button.querySelector(".dislike_count");
-            toggleButton(button, countElement);
-        });
-    });
+
+
+function toggleLikeButton(event) {
+  const checkbox = event.target.querySelector('.like_checkbox');
+  console.log(checkbox)
+  checkbox.checked =!checkbox.checked;
 }
 
-// Appel de la fonction pour attacher les événements de clic aux boutons
-attachButtonEvents();
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     const likeButtons = document.querySelectorAll('.like_button');
+//     const dislikeButtons = document.querySelectorAll('.dislike_button');
+
+//     likeButtons.forEach(button => {
+//         button.addEventListener('click', () => {
+//             const articleId = button.dataset.articleId;
+//             fetch(`/like/${articleId}`, { method: 'POST' })
+//                 .then(response => {
+//                     if (response.ok) {
+//                         // Mettre à jour la valeur du compteur de likes en utilisant AJAX
+//                         updateLikeCount(articleId);
+//                         console.log('Article liked successfully.');
+//                     } else {
+//                         console.error('Failed to like the article.');
+//                     }
+//                 })
+//                 .catch(error => {
+//                     console.error('Error occurred while liking the article:', error);
+//                 });
+//         });
+//     });
+
+//     dislikeButtons.forEach(button => {
+//         button.addEventListener('click', () => {
+//             const articleId = button.dataset.articleId;
+//             fetch(`/dislike/${articleId}`, { method: 'POST' })
+//                 .then(response => {
+//                     if (response.ok) {
+//                         // Mettre à jour la valeur du compteur de dislikes en utilisant AJAX
+//                         updateDislikeCount(articleId);
+//                         console.log('Article disliked successfully.');
+//                     } else {
+//                         console.error('Failed to dislike the article.');
+//                     }
+//                 })
+//                 .catch(error => {
+//                     console.error('Error occurred while disliking the article:', error);
+//                 });
+//         });
+//     });
+// });
+
+// function updateLikeCount(articleId) {
+//     fetch(`/get_like_count/${articleId}`, { method: 'GET' })
+//         .then(response => {
+//             if (response.ok) {
+//                 return response.text();
+//             } else {
+//                 throw new Error('Failed to get like count for the article.');
+//             }
+//         })
+//         .then(count => {
+//             const likeCountSpan = document.getElementById(`like_count_${articleId}`);
+//             if (likeCountSpan) {
+//                 likeCountSpan.textContent = count;
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error occurred while updating like count:', error);
+//         });
+// }
+
+// function updateDislikeCount(articleId) {
+//     fetch(`/get_dislike_count/${articleId}`, { method: 'GET' })
+//         .then(response => {
+//             if (response.ok) {
+//                 return response.text();
+//             } else {
+//                 throw new Error('Failed to get dislike count for the article.');
+//             }
+//         })
+//         .then(count => {
+//             const dislikeCountSpan = document.getElementById(`dislike_count_${articleId}`);
+//             if (dislikeCountSpan) {
+//                 dislikeCountSpan.textContent = count;
+//             }
+//         })
+//         .catch(error => {
+//             console.error('Error occurred while updating dislike count:', error);
+//         });
+// }
 
 
 
+
+
+
+
+// Commentaires Ryan
+
+
+    
     </script>
-
 </body>
 
 </html>

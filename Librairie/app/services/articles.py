@@ -173,3 +173,13 @@ def undislike_article(article_id : str, article: ArticleSchema):
         article = session.scalars(statement).first()
         article.dislikes -= 1
         session.commit()
+
+def get_like_count(article_id : str):
+    article = get_article_by_id(article_id)
+    likes = article.likes
+    return likes
+
+def get_dislike_count(article_id : str):
+    article = get_article_by_id(article_id)
+    dislikes = article.dislikes
+    return dislikes

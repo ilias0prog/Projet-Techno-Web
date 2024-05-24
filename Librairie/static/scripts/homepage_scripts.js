@@ -1,45 +1,76 @@
-function toggleComments(article_id) {
-    const commentsContainer = document.getElementById(`comments-container-${article_id}`);
-    commentsContainer.classList.toggle('show');
-}
+function toggleCommentForm(articleId) {
+    var commentForm = document.getElementById('comment-form-' + articleId);
+    if (commentForm.style.display === 'none') {
+        commentForm.style.display = 'block';
+        } else {
+        commentForm.style.display = 'none';
+        }
+    }
 
-function toggleCommentForm(article_id) {
-    const commentFormContainer = document.getElementById(`comment-form-${article_id}`);
-    commentFormContainer.classList.toggle('show');
-}
+    function toggleComments(articleId) {
+        // Make an AJAX request to load the comments for the given article ID
+        // You can use fetch() or XMLHttpRequest for this
+        // Once you have retrieved the comments, update the display on the page
 
+        // Example of fetch() request to load comments
+        fetch(`/load_comments/${articleId}`)
+        .then(response => response.json())
+        .then(comments => {
+            // Update the display with the loaded comments
+            const commentsContainer = document.getElementById('comments-container-' + articleId);
+            commentsContainer.innerHTML = '';
+
+            comments.forEach(comment => {
+            const commentElement = document.createElement('div');
+            commentElement.classList.add('comment');
+            commentElement.innerHTML = `
+                <div class="comment-author">${comment.author}</div>
+                <div class="comment-content">${comment.content}</div>
+            `;
+            commentsContainer.appendChild(commentElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 
 function postComment(event, articleId) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
+    event.preventDefault(); // Empêche le formulaire de se soumettre normalement
 
-    fetch(`/post_comment`, {
-        method: "POST",
-        body: formData,
+    // Récupérez le contenu du commentaire à partir du formulaire
+    var commentContent = document.querySelector('#comment-form-' + articleId + ' textarea').value;
+
+    // Faites une airerequête AJAX pour poster le commentaire
+    //pour celauvez utiliser fetch() ou XMLHttpRequest pour cela
+    // Une fois que le commentaire est posté avec succès, mettez à jour l'affichage sur laaire page
+
+    // Exemple de requête fetch() pour poster le commentaire
+    fetch('/post_comment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            article_id: articleId,
+            comment: commentContent
+        })
     })
-    .then(response => response.json())
-    .then(comment => {
-        const commentsContainer = document.getElementById(`comments-container-${articleId}`);
-        commentsContainer.innerHTML += `
-            <div class="comment">
-                <p><strong>${comment.author_id}</strong> ${new Date(comment.date).toLocaleString()}</p>
-                <p>${comment.content}</p>
-            </div>
-        `;
-        form.reset();
-        toggleCommentForm(articleId);
+    .then(response => {
+        if (response.ok) {
+            // Si le commentaire est posté avec succès, chargez à nouveau les commentaires de l'article
+            loadComments(articleId);
+            // Effacez le contenu du champ de commentaire après l'avoir posté
+            document.querySelector('#comment-form-' + articleId + ' textarea').value = '';
+        } else {
+            console.error('Failed to post comment');
+        }
     })
-    .catch(error => console.error("Error posting comment:", error));
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
-    if (response.ok) {
-        const comment = await response.json();
-        addCommentToDOM(articleId, comment);
-        form.reset();
-    } else {
-        console.error('Failed to post comment');
-    }
 
 function addCommentToDOM(articleId, comment) {
     const commentsContainer = document.getElementById(`comments-container-${articleId}`);

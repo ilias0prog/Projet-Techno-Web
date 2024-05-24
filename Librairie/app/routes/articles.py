@@ -1,7 +1,6 @@
 from typing import Annotated
 from fastapi import APIRouter, HTTPException, status, Depends, Form
-from fastapi.responses import RedirectResponse, JSONResponse
-from fastapi.responses import JSONResponse
+from fastapi.responses import RedirectResponse, JSONResponse, PlainTextResponse
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 from app.schemas.article import *
@@ -130,3 +129,35 @@ def search_articles(request : Request, user: UserSchema = Depends(login_manager)
 # def search_articles(request : Request, title: str = Form(...), user: UserSchema = Depends(login_manager)):
 #     articles = service.get_articles_by_title(date) or 
 #     return templates.TemplateResponse("/search_articles.html", context = {"request" : request, "articles" : articles, "user" : user})
+
+@router.post("/like/{article_id}")
+def like_article(article_id :str):
+    service.like_article(article_id)
+    return RedirectResponse(status_code=302)
+
+@router.post("/unlike/{article_id}")
+def like_article(article_id :str):
+    service.unlike_article(article_id)
+    return RedirectResponse(status_code=302)
+
+@router.post("/dislike/{article_id}")
+def dislike_article(article_id :str):
+    service.like_article(article_id)
+    return RedirectResponse(status_code=302)
+
+@router.post("/undislike/{article_id}")
+def undislike_article(article_id :str):
+    service.unlike_article(article_id)
+    return RedirectResponse(status_code=302)
+
+
+@router.get("/get_like_count/{article_id}")
+async def get_like_count(article_id: str):
+    like_count = service.get_like_count(article_id)
+    return PlainTextResponse(str(like_count))
+
+
+@router.get("/get_dislike_count/{article_id}")
+async def get_dislike_count(article_id: str):
+    dislike_count = service.get_dislike_count(article_id)
+    return PlainTextResponse(str(dislike_count))

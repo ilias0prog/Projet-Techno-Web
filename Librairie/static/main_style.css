@@ -442,7 +442,7 @@ body {
 
 }
 
-#like-button-icon {
+#like-button-icon, #dislike-button-icon {
     font-size: 1.2em;
     margin: 3px;
 }
@@ -471,6 +471,14 @@ body {
 
 .dislike_button:active {
     background-color: rgba(201, 131, 95, 1);
+}
+
+.like_checkbox, .dislike_checkbox {
+    position: absolute;
+    opacity: 0;
+    max-width: 50px;
+    width: 50px !important;
+    height: 30px;
 }
 
 
@@ -687,3 +695,48 @@ body {
 
     background-color: white;
 } */
+
+body.my-profile-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my-profile-header{
+    position: absolute;
+    top: 15vh;
+    margin: 20px;
+    color: #fffff8;
+    left: 45.5%;
+
+}
+
+.profile-container {
+    position: absolute;
+    top: 25vh;
+    left: 35vw;
+    right: auto;
+    width: 30vw;
+    height: 60vh;
+    min-width: 500px;
+    padding: 20px;
+    padding-bottom: 50px;
+    /* height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    background: none;
+    border-radius: 15px;
+    border: none;
+    backdrop-filter: blur(25px);
+    box-shadow: .1rem .5rem 1rem rgba(0, 0, 0, .3);
+}
+
+.username-container{
+    background-color: #4d6e7e;
+
+    border-radius: 15px;
+    border: none;  
+    padding: 5px;
+
+    box-shadow: .1rem .5rem 1rem rgba(0, 0, 0, .3);
+}

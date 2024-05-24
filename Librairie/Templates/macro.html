@@ -30,12 +30,35 @@
     <h1 class="card-title">{{ title }}</h1>
     <p class="card-article">"{{ content }}"</p>
 
-    <button class="comment-toggle-btn" onclick="toggleComments({{ article_id }})"><i class='bx bx-comment'></i></button>
+    <!-- <button class="like_button">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
+    <button class="dislike_button">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button> -->
 
-    <button class="like_button">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
-    <button class="dislike_button">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button>
+    <!-- <button class="like_button" onclick="toggleCheckbox('like_checkbox')">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
+<input type="checkbox" class="like_checkbox" style="display: none">
 
-    
+<button class="dislike_button" onclick="toggleCheckbox('dislike_checkbox')">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button>
+<input type="checkbox" class="dislike_checkbox" style="display: none"> -->
+
+
+    <button class="like_button" onclick="toggleCheckbox('like_checkbox')">
+        <input type="checkbox" class="like_checkbox">
+        <i class='bx bx-like' id="like-button-icon"></i>
+    </button>
+
+    <button class="dislike_button">
+        <input type="checkbox" class="dislike_checkbox" onchange="toggleCheckbox('dislike_checkbox')">
+        <i class='bx bx-dislike' id="dislike-button-icon"></i>
+    </button>
+
+    <!-- <button class="like_button" id="like_button_{{ article_id }}" data-article-id="{{ article_id }}">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
+    <span class="like_count" id="like_count_{{ article_id }}">{{ likes }}</span>
+
+    <button class="dislike_button" id="dislike_button_{{ article_id }}" data-article-id="{{ article_id }}">{{ dislikes }} <i class='bx bx-dislike' id="dislike-button-icon"></i></button>
+    <span class="dislike_count" id="dislike_count_{{ article_id }}">{{ dislikes }}</span> -->
+
+
+<button class="comment-toggle-btn" onclick="toggleComments( article_id )"><i class='bx bx-comment'></i></button>
+
 <div class="comments-container" id="comments-container-{{ article_id }}">
     {% for comment in article_comments %}
         <div class="comment">
@@ -44,7 +67,7 @@
         </div>
     {% endfor %}
 
-    <button class="comment-form-toggle-btn" onclick="toggleCommentForm({{ article_id }})">Write a Comment</button>
+    <!-- <button class="comment-form-toggle-btn" onclick="toggleCommentForm( article_id )">Write a Comment</button> -->
 
     <div class="comment-form-container" id="comment-form-{{ article_id }}" style="display: none;">
         <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article_id }})">
@@ -62,14 +85,11 @@
     
 
 
-{% macro show_comment( article_id, author_id, date, content, likes, dislikes) %}
+{% macro show_comment( article_id, author_id, date, content) %}
 <div class="news-card">
     <div class="card-infos">
-        <i class='bx bx-user-circle' id="card-profilepicture"></i><h3 class="card-username">{{ author_name }}</h3>
-        <h2 class="card-theme">{{ theme }}</h2>
-        <h3 class="card-date">{{ date }}</h3>
+        <i class='bx bx-user-circle' id="card-profilepicture"></i><h3 class="card-username">{{ author_name }}</h3>   
     </div>
-    <h1 class="card-title">{{ title }}</h1>
     <p class="card-article">{{ content }}</p>
 </div>
 {% endmacro %}
