@@ -81,19 +81,18 @@ def create_article( title: str = Form(...), content: str = Form(...), theme: str
     article = ArticleSchema(id = str(uuid4()),author_username= user.username, title=title, date = datetime.now().date(), content=content , theme=theme)
     service.add_article(article)
     # return RedirectResponse(url="/articles/homepage/user_themes/data", status_code=status.HTTP_303_SEE_OTHER)
-    return RedirectResponse(url="/articles/create", status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(url="/articles/create", status_code=302)
 
 
 @router.get("/edit/{article_id}")
 def edit_article(request : Request, article_id: str, user: UserSchema = Depends(login_manager)):
     article = service.get_article_by_id(article_id)
-    return templates.TemplateResponse("/edit_article.html", context = {"request" : request, "title" : article.title,"content": article.content ,"user" : user})
+    return templates.TemplateResponse("/edit_article.html", context = {"request" : request,"id": article.id ,"title" : article.title,"content": article.content ,"user" : user})
 
 @router.post("/edit/{article_id}")
-def edit_article( article_id: str, title: str = Form(...), content: str = Form(...), theme: str = Form(...), user: UserSchema = Depends(login_manager)):
-    article = Article(title=title, content=content, theme=theme, author=user.username)
-    service.update_article(article_id, article)
-    return RedirectResponse(url="/articles/my_articles")
+def edit_article( article_id: str, title: str = Form(...), content: str = Form(...), user: UserSchema = Depends(login_manager)):
+    service.update_article(article_id, title, content)
+    return RedirectResponse(url="/articles/my_articles", status_code=302)
 
 @router.get("/delete/{article_id}")
 def delete_article(request : Request, article_id: str, user: UserSchema = Depends(login_manager)):
@@ -103,13 +102,21 @@ def delete_article(request : Request, article_id: str, user: UserSchema = Depend
 @router.post("/delete/{article_id}")
 def delete_article( article_id: str, user: UserSchema = Depends(login_manager)):
     service.delete_article(article_id)
-    return RedirectResponse(url="/articles/my_articles")
+    return RedirectResponse(url="/articles/my_articles", status_code=302)
 
 
 @router.get("/my_articles")
 def get_my_articles(request : Request, user: UserSchema = Depends(login_manager)):
     articles = service.get_all_articles_by_author(user)
    
+    def compare_by_date(article : Article):
+        # Convertir la date de l'article en objet datetime pour la comparaison
+        article_date = datetime.strptime(article.date, "%Y:%m:%d")
+        return article_date
+
+    # Trier les articles par date dans l'ordre descendant en utilisant la fonction de comparaison
+   
+    sorted_articles = sorted(articles, key=compare_by_date, reverse=True)
     comments = {}
     for article in articles:
         comments[article.id] = get_comments_by_article(article.id)

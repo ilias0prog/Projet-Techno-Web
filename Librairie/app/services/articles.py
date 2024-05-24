@@ -138,13 +138,12 @@ def delete_article(article_id: str):
         session.delete(article)
         session.commit()
 
-def update_article(article_id: str, article: ArticleSchema):
+def update_article(article_id: str, title: str, content: str):
     with Session() as session:
         statement = select(Article).where(Article.id == article_id)
         article = session.scalars(statement).first()
-        article.title = article.title
-        article.date = article.date
-        article.content = article.content
+        article.title = title
+        article.content =content
         session.commit()
 
 def like_article(article_id : str, article: ArticleSchema):
