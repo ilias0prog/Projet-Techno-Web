@@ -1,64 +1,17 @@
 from app.schemas.article import ArticleSchema
+from app.schemas.user import UserSchema
 from app.models.usersandarticles import Article
 from uuid import uuid4
 from app.database import Session
 from sqlalchemy import select
+import random
 
 
 def get_all_articles():
     with Session() as session:
         statement = select(Article)
         articles_data = session.scalars(statement).all()
-        return [
-            Article(
-                id          = article.id,
-                author_id   = article.author_id,
-                title       = article.title,
-                date        = article.date,
-                content     = article.content,
-                theme       = article.theme,
-                note        = article.note)
-            for article in articles_data]
-        
-        
-def get_all_articles_by_author(user):
-    with Session() as session:
-        statement = select(Article).where(Article.author_username == user.username)
-        articles_data = session.scalars(statement).all()
-        return [
-            Article(
-                id          = article.id,
-                author_username   = article.author_username,
-                title       = article.title,
-                date        = article.date,
-                content     = article.content,
-                theme       = article.theme,
-                likes       = article.likes,
-                dislikes    = article.dislikes)
-            for article in articles_data]
-        
-
-def get_all_articles_by_themes(themes: list):
-    with Session() as session:
-        statement = select(Article).where(Article.theme.in_(themes))
-        articles_data = session.execute(statement).scalars().all()
-        return [
-            Article(
-                id              =article.id,
-                author_username = article.author_username,
-                title           =article.title,
-                date            = article.date,
-                content         =article.content,
-                theme           =article.theme,
-                likes           =article.likes,
-                dislikes        =article.dislikes)
-            for article in articles_data]
-    
-def get_all_articles_by_date(data):
-    with Session() as session:
-        statement = select(Article).where(Article.date == data)
-        articles_data = session.execute(statement).scalars().all()
-        return [
+        articles_list = [
             Article(
                 id              =article.id,
                 author_username =article.author_username,
@@ -69,6 +22,68 @@ def get_all_articles_by_date(data):
                 likes           =article.likes,
                 dislikes        =article.dislikes)
             for article in articles_data]
+        
+        random.shuffle(articles_list)
+        return articles_list
+        
+        
+def get_all_articles_by_author(user):
+    with Session() as session:
+        statement = select(Article).where(Article.author_username == user.username)
+        articles_data = session.scalars(statement).all()
+        articles_list = [
+            Article(
+                id              =article.id,
+                author_username =article.author_username,
+                title           =article.title,
+                date            = article.date,
+                content         =article.content,
+                theme           =article.theme,
+                likes           =article.likes,
+                dislikes        =article.dislikes)
+            for article in articles_data]
+        
+        random.shuffle(articles_list)
+        return articles_list
+
+
+def get_all_articles_by_themes(themes: list):
+    with Session() as session:
+        statement = select(Article).where(Article.theme.in_(themes))
+        articles_data = session.execute(statement).scalars().all()
+        articles_list = [
+            Article(
+                id              =article.id,
+                author_username =article.author_username,
+                title           =article.title,
+                date            = article.date,
+                content         =article.content,
+                theme           =article.theme,
+                likes           =article.likes,
+                dislikes        =article.dislikes)
+            for article in articles_data]
+        
+        random.shuffle(articles_list)
+        return articles_list
+    
+def get_all_articles_by_date(data):
+    with Session() as session:
+        statement = select(Article).where(Article.date == data)
+        articles_data = session.execute(statement).scalars().all()
+        articles_list = [
+            Article(
+                id              =article.id,
+                author_username =article.author_username,
+                title           =article.title,
+                date            = article.date,
+                content         =article.content,
+                theme           =article.theme,
+                likes           =article.likes,
+                dislikes        =article.dislikes)
+            for article in articles_data]
+        
+        random.shuffle(articles_list)
+        return articles_list
     
 
 # def change_date_format(date : str):
@@ -98,7 +113,7 @@ def get_article_by_id(article_id: str) -> ArticleSchema | None:
                 date=article.date,
                 content=article.content,
                 theme=article.theme,
-                note=article.note
+                
             )
     return None
 

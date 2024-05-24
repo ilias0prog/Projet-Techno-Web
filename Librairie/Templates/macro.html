@@ -28,10 +28,14 @@
         <h3 class="card-date">{{ date }}</h3>
     </div>
     <h1 class="card-title">{{ title }}</h1>
-    <p class="card-article">{{ content }}</p>
+    <p class="card-article">"{{ content }}"</p>
 
     <button class="comment-toggle-btn" onclick="toggleComments({{ article_id }})"><i class='bx bx-comment'></i></button>
 
+    <button class="like_button">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
+    <button class="dislike_button">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button>
+
+    
 <div class="comments-container" id="comments-container-{{ article_id }}">
     {% for comment in article_comments %}
         <div class="comment">

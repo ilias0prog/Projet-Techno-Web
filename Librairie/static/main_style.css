@@ -17,10 +17,11 @@ body {
 }
 
 .header{
-    position: fixed;    
+    position: fixed;  
     top: 0;
     left: 0;
     width: 100%;
+    height: 150px;
     padding: 1.3rem 10%;
     /* background-color: rgba(255, 255, 255, 0.1); */
     /* backdrop-filter: blur(50px); */
@@ -29,6 +30,12 @@ body {
     align-items: center;
     z-index: 100;
     box-shadow: .1rem .5rem 1rem rgba(0, 0, 0, .3);
+
+    transition: all ease .2s;
+}
+
+.header:hover {
+    height: 185px;
 }
 
 .header::before {
@@ -251,8 +258,7 @@ body {
     background-color: #4d6e7e;
 }
 
-.create-article-header{
-    display: block;
+.new-article-header{
     color: #fffff8;
     margin: 50px;
     margin-left: 10vw;
@@ -417,6 +423,60 @@ body {
     font-weight: 600;
 }
 
+.like_button, .dislike_button {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -70px;
+    width: 50px;
+    height: 30px;
+
+    color: #fffff8;
+    font-weight: bold;
+
+    border: none;
+    border-radius: 12px;
+
+
+    box-shadow: .1rem .2rem .4rem rgba(0, 0, 0, .2);
+    
+    transition: all ease .2s;
+
+}
+
+#like-button-icon {
+    font-size: 1.2em;
+    margin: 3px;
+}
+
+.like_button {
+    bottom: 55%;
+    background-color: rgba(95, 165, 201,.6);
+}
+
+.dislike_button {
+    bottom: 45%;
+    background-color: rgba(201, 131, 95,.8);
+}
+
+.like_button:hover {
+    transform: rotate(-3deg);
+}
+
+.dislike_button:hover {
+    transform: rotate(3deg);
+}
+
+.like_button:active {
+    background-color: rgba(95, 165, 201,.9);
+}
+
+.dislike_button:active {
+    background-color: rgba(201, 131, 95, 1);
+}
+
+
 /* .comment-toggle-btn{
     font-weight: bold;
     position: relative;
@@ -522,3 +582,109 @@ body {
     display: block;
     max-height: 500px; /* Ajustez cette valeur en fonction de la taille de votre formulaire */
 }
+
+.my-articles-header {
+    position: fixed;
+    top: 15vh;
+    margin: 20px;
+    color: #fffff8;
+    left: 15vw;
+}
+
+.back_button {
+    position: fixed;
+    top: 25vh;
+}
+
+.edit-article-form {
+    text-align: center;
+    position: fixed;
+    top: 30vh;
+    width: 70%;
+    left: 15%;
+
+    padding: 20px;
+
+    border: none;
+    border-radius: 12px;
+
+    background-color: #4d6e7e;
+
+    box-shadow: .1rem .5rem 1rem rgba(0, 0, 0, .3);
+}
+
+.edit-article-form-group {
+    margin: 10px;
+    width: 100%;
+}
+
+#edit_article_title, #edit_article_content {
+
+    width: 60%;
+    height: 40px;
+
+    margin-top: 30px;
+    padding: 5px;
+
+    border: none;
+    border-radius: 6px;
+    outline: none;
+}
+
+#edit_article_title {
+    font-size: 1.2em;
+    width: 80%;
+}
+
+.edit_article_label {
+    display: none;
+    font-weight: bold;
+}
+
+#edit_article_label_title {
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.edit-article-button {
+    position: absolute;
+
+    right: 7.5%;
+    bottom: 40%;
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    border-radius: 24px;
+}
+
+
+#edit-article-button-icon {
+    font-size: 2em;
+}
+
+#edit-article-content {
+    display: block;
+    margin-top: 30px;
+    margin-left: 10%;
+    width: 80%;
+    resize: none;
+
+    padding: 12px;
+    height: 30vh;
+
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    overflow: scroll;
+
+    background-color: #fffff8;
+}
+
+/* .back_button {
+    position: absolute;
+    bottom: 0;
+
+    background-color: white;
+} */

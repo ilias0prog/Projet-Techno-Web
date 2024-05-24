@@ -1,22 +1,46 @@
-{% extends "empty_page.html" %}
+
 {% block content %}
 <head>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../static/homepage.css">
 </head>
 
 <body>
     <h1>Your profile</h1>
-    <div class="my_profile_container">
-        <p>Username : user.username</p>
-        <p>Firstname : user.firstname</p>
-        <p>Name : user.name</p>
-        <p>eMail : user.email</p>
-        <p> admin : user.admin</p>
+    <div class="user-form-group">
+        <label class="edit_article_label" id="edit_article_label_name" for="user_name">Name</label>
+        <input type="text" class="form-control" id="edit_user_name"
+               name="name" placeholder="{{name}}" value="{{name}}"/>
     </div>
 
+    <div class="user-form-group">
+        <label class="edit_article_label" id="edit_article_label_firstname" for="user_firstname">First Name</label>
+        <input type="text" class="form-control" id="edit_user_firstname"
+               name="firstname" placeholder="{{firstname}}" value="{{firstname}}"/>
+    </div>
 
+    <div class="user-form-group">
+        <label class="edit_article_label" id="edit_article_label_username" for="user_username">Username</label>
+        <input type="text" class="form-control" id="edit_user_username"
+               name="username" placeholder="{{username}}" value="{{username}}"/>
+    </div>
 
-
+    <div class="user-form-group">
+        <label class="edit_article_label" id="edit_article_label_email" for="user_email">Email</label>
+        <input type="email" class="form-control" id="edit_user_email"
+               name="email" placeholder="{{email}}" value="{{email}}"/>
+    </div>
+    
+    <div class="user-form-group">
+        <label class="edit_article_label" id="edit_article_label_interests" for="user_interests">Interests</label>
+        <input type="text" class="form-control" id="edit_user_interests"
+               name="interests" placeholder="{{Interests}}" value="{{interests}}"/>
+    </div>
 </body>
+
+    <button class="btn btn-primary" id="edit_user_button">Edit</button>
+    <button class="btn btn-primary" id="delete_user_button">Delete</button>
+    <button class="btn btn-primary" id="logout_button">Logout</button>
+
+   
 
 {% endblock %}

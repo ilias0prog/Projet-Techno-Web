@@ -2,13 +2,13 @@
 from sqlalchemy import create_engine 
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from uuid import uuid4
-from datetime import datetime
+from datetime import datetime, date
 import random
 
 engine = create_engine(
-    #"sqlite:///data/database.sqlite", 
+    #"sqlite:///data/database.sqlite",
     "sqlite:///Librairie\data\database.sqlite", 
-    echo=True
+    echo=False
 )
 
 Session = sessionmaker(engine)
@@ -26,6 +26,7 @@ from app.models.usersandarticles import  Comment
 def create_database():
     Base.metadata.create_all(engine)
 
+
 def clear_database():
     Base.metadata.clear()
     
@@ -42,7 +43,7 @@ def fill_users_db():
         "email": "john.doe@example.com",
         "password": "password123",
         "admin": True,
-        
+        "interests" : "sport technology culture health cinema music politics environment international economics",
     },
     {
         "id": str(uuid4()),
@@ -52,7 +53,7 @@ def fill_users_db():
         "email": "jane.smith@example.com",
         "password": "password456",
         "admin": False,
-        
+        "interests" : "health cinema music",
     },
     {
         "id": str(uuid4()),
@@ -62,7 +63,7 @@ def fill_users_db():
         "email": "bob.johnson@example.com",
         "password": "password789",
         "admin": False,
-        
+        "interests" : "politics technology",
     },
     {
         "id": str(uuid4()),
@@ -72,7 +73,7 @@ def fill_users_db():
         "email": "emily.clark@example.com",
         "password": "passwordabc",
         "admin": True,
-       
+       "interests" : "sport environment international",
     },
     {
         "id": str(uuid4()),
@@ -82,7 +83,7 @@ def fill_users_db():
         "email": "michael.taylor@example.com",
         "password": "passworddef",
         "admin": False,
-        
+        "interests" : "sport culture social",
     },
     {
         "id": str(uuid4()),
@@ -92,7 +93,7 @@ def fill_users_db():
         "email": "susan.miller@example.com",
         "password": "passwordghi",
         "admin": False,
-        
+        "interests" : "cinema politics economics",
     },
     {
         "id": str(uuid4()),
@@ -102,7 +103,7 @@ def fill_users_db():
         "email": "david.anderson@example.com",
         "password": "passwordjkl",
         "admin": True,
-       
+       "interests" : "economics culture cinema",
     },
     {
         "id": str(uuid4()),
@@ -112,7 +113,7 @@ def fill_users_db():
         "email": "amy.wilson@example.com",
         "password": "passwordmno",
         "admin": False,
-        
+        "interests" : "environment international health",
     },
     {
         "id": str(uuid4()),
@@ -122,7 +123,7 @@ def fill_users_db():
         "email": "peter.brown@example.com",
         "password": "passwordpqr",
         "admin": False,
-        
+        "interests" : "social music politics",
     },
     {
         "id": str(uuid4()),
@@ -132,7 +133,7 @@ def fill_users_db():
         "email": "laura.evans@example.com",
         "password": "passwordstu",
         "admin": True,
-        
+        "interests" : "sport technology",
     }
 ]
     
@@ -145,7 +146,7 @@ def fill_users_db():
                 name=user_data["name"],
                 email=user_data["email"],
                 password=user_data["password"],
-                interests  = "sport",
+                interests  = user_data["interests"],
                 admin=user_data["admin"],
                 )
             session.add(user)
@@ -163,8 +164,11 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[0].username,
                     "title": "The Impact of Technology on Sportsmanship",
-                    "date": datetime.now(),
-                    "content": "In the realm of sports, the ongoing debate about the role of technology continues to evolve. From controversial referee decisions to athlete performance enhancements, technology has become deeply intertwined with the fabric of sportsmanship. As advancements in data analytics and wearable technology push the boundaries of athletic performance, questions arise about fairness, ethics, and the essence of true competition. This article explores the intricate relationship between sports and technology, examining both its benefits and drawbacks.",
+                    "date": date(2024,5,18),
+                    "content": "In the realm of sports, the ongoing debate about the role of technology continues to evolve. From controversial referee decisions to athlete performance enhancements, technology has become deeply intertwined with the fabric of sportsmanship. As advancements in data analytics and wearable technology push the boundaries of athletic performance, questions arise about fairness, ethics, and the essence of true competition. This article explores the intricate relationship between sports and technology, examining both its benefits and drawbacks."
+                    +"The rise of technology in sports has brought about a myriad of changes, some hailed as revolutionary advancements and others criticized as detrimental interferences in the game. The use of video technology to review contentious decisions on the field has significantly improved the accuracy and transparency of competitions, thereby reducing human errors and controversies. Similarly, advances in tracking devices and biometric sensors allow coaches and athletes to gather valuable data on individual performances, thereby facilitating training optimization and injury prevention."
+                    +"However, with these benefits also come challenges and ethical dilemmas. The introduction of technology into sports raises questions about fairness and equal opportunities. Teams and athletes with greater financial resources may invest more in cutting-edge technologies, thereby creating a competitive imbalance. Furthermore, the use of advanced technologies such as genetic modification and robotic prosthetics raises fundamental questions about what is considered fair in sports competition."
+                    +"Ultimately, the relationship between sports and technology is a complex issue that requires thoughtful consideration and open dialogue. As technology continues to progress by leaps and bounds, it is imperative that stakeholders in the world of sports engage in meaningful discussions about how it can be used responsibly to enhance the sporting experience while preserving the integrity and ethics of competition.",
                     "theme": "sport",
                     "likes": 4,
                     "dislikes": 1
@@ -173,8 +177,12 @@ def fill_articles_db():
                     "id" : str(uuid4),
                     "author_username": users[1].username,
                     "title": "Exploring Cultural Diversity in the Modern World",
-                    "date": datetime.now(),
-                    "content": "Culture, as a dynamic and multifaceted concept, shapes our identities, beliefs, and interactions in profound ways. From traditional customs to contemporary art forms, culture reflects the collective experiences and expressions of a society. This article delves into the rich tapestry of cultural diversity, exploring how globalization, migration, and technology influence cultural exchange and adaptation. Through a lens of anthropology and sociology, we unravel the complexities of culture and its enduring impact on human civilization.",
+                    "date": date(2024,4,29),
+                    "content": "Culture, as a dynamic and multifaceted concept, shapes our identities, beliefs, and interactions in profound ways. From traditional customs to contemporary art forms, culture reflects the collective experiences and expressions of a society. This article delves into the rich tapestry of cultural diversity, exploring how globalization, migration, and technology influence cultural exchange and adaptation. Through a lens of anthropology and sociology, we unravel the complexities of culture and its enduring impact on human civilization."
+                    + " Culture is not static but rather constantly evolving, shaped by historical events, social interactions, and external influences. Globalization, with its interconnectedness and ease of communication, has facilitated the exchange of ideas, beliefs, and practices across borders. This has led to a blending of cultures and the emergence of hybrid identities, challenging traditional notions of cultural purity and authenticity. Additionally, migration plays a significant role in cultural diffusion, as people bring their customs and traditions to new environments, enriching local cultures while also facing challenges of assimilation and cultural preservation."
+                    + " Technology, particularly the internet and social media, has further accelerated the pace of cultural exchange and interaction. Platforms like YouTube, Instagram, and TikTok allow individuals to share their cultural expressions with a global audience, breaking down geographical barriers and fostering cross-cultural understanding. However, the digital age also presents challenges, such as the spread of misinformation and the homogenization of culture through mass media and commercialization."
+                    + "Anthropologists and sociologists study culture from various perspectives, seeking to understand its underlying dynamics and significance in human societies. They explore topics such as cultural relativism, ethnocentrism, and cultural hegemony, shedding light on power dynamics and inequalities within and between cultures. By critically examining cultural practices and beliefs, researchers contribute to a deeper understanding of human diversity and the complexities of cultural identity."
+                    + " In conclusion, culture is a multifaceted and dynamic phenomenon that shapes our lives in profound ways. As globalization, migration, and technology continue to reshape the cultural landscape, it is essential to recognize and celebrate the diversity of human expression while also engaging in meaningful dialogue and mutual respect across cultural boundaries. By embracing cultural diversity and fostering intercultural understanding, we can build a more inclusive and harmonious global community.",
                     "theme": "culture",
                     "likes": 5,
                     "dislikes": 0
@@ -183,7 +191,7 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[2].username,
                     "title": "The Path to Holistic Wellness: A Journey of Self-Care",
-                    "date": datetime.now(),
+                    "date": date(2024,5,15),
                     "content": "The pursuit of optimal health and well-being is a universal endeavor that transcends geographical boundaries and cultural differences. In today's fast-paced world, the importance of holistic health practices is increasingly recognized as essential for longevity and vitality. From mindful meditation to nutritional therapy, this article navigates the intricate landscape of holistic health, offering insights into alternative healing modalities and lifestyle choices. Join us on a journey toward holistic wellness and discover the transformative power of self-care.",
                     "theme": "health",
                     "likes": 3,
@@ -193,7 +201,7 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[3].username,
                     "title": "Navigating the Complexities of Political Theory",
-                    "date": datetime.now(),
+                    "date": date(2024,5,12),
                     "content": "Politics, the art and science of governance, shapes the course of nations and the destiny of societies. As geopolitical landscapes shift and power dynamics evolve, the study of politics becomes ever more critical in understanding global affairs. This article delves into the nuances of political theory, examining ideologies, institutions, and international relations. From democracy to authoritarianism, we explore the diverse spectrum of political systems and their impact on policy, diplomacy, and human rights.",
                     "theme": "politics",
                     "likes": 4,
@@ -203,7 +211,7 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[4].username,
                     "title": "Unraveling the Digital Revolution: Exploring Emerging Technologies",
-                    "date": datetime.now(),
+                    "date": date(2024,3,5),
                     "content": "The rapid advancement of technology has revolutionized virtually every aspect of modern life, from communication and commerce to healthcare and education. As we navigate the complexities of the digital age, questions about privacy, security, and ethics loom large. This article delves into the frontiers of technological innovation, exploring emerging trends such as artificial intelligence, blockchain, and virtual reality. Join us as we unravel the possibilities and pitfalls of the digital revolution, and contemplate the future of humanity in an increasingly interconnected world.",
                     "theme": "technology",
                     "likes": 4,
@@ -213,7 +221,7 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[5].username,
                     "title": "The Rhythm of Life: Exploring the Evolution of Music",
-                    "date": datetime.now(),
+                    "date": date(2024,5,18),
                     "content": "Music, the universal language of emotions, has captivated human hearts and minds for millennia. From ancient chants to modern symphonies, the evolution of music reflects the cultural, social, and technological changes of each era. This article embarks on a journey through musical history, tracing the origins of different genres, instruments, and musical traditions. Join us as we explore the transformative power of music and its profound impact on our lives and societies.",
                     "theme": "music",
                     "likes": 3,
@@ -223,7 +231,7 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[6].username,
                     "title": "Lights, Camera, Action! The Art of Cinematic Storytelling",
-                    "date": datetime.now(),
+                    "date": date(2024,3,30),
                     "content": "Cinema, the magical world of storytelling through moving images, has enchanted audiences around the globe for over a century. From silent films to blockbuster franchises, the evolution of cinema mirrors the evolution of human imagination and technology. This article delves into the art and craft of cinematic storytelling, examining the techniques, themes, and cultural significance of iconic films. Join us as we embark on a cinematic journey through time and space, exploring the boundless creativity of filmmakers and the enduring impact of their stories.",
                     "theme": "cinema",
                     "likes": 5,
@@ -233,7 +241,7 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[7].username,
                     "title": "The Green Revolution: Navigating Environmental Sustainability",
-                    "date": datetime.now(),
+                    "date": date(2024,5,5),
                     "content": "The global environmental crisis has reached a critical juncture, necessitating urgent action to mitigate climate change and preserve our planet's biodiversity. From renewable energy to conservation efforts, the green revolution is paving the way toward a sustainable future. This article explores the challenges and opportunities of environmental sustainability, highlighting innovative solutions and grassroots initiatives that aim to protect and restore our natural ecosystems. Join us as we delve into the frontline of environmental activism and envision a world where humanity lives in harmony with nature.",
                     "theme": "environment",
                     "likes": 4,
@@ -243,7 +251,7 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[8].username,
                     "title": "The Socioeconomic Impact of Globalization",
-                    "date": datetime.now(),
+                    "date": date(2024,5,5),
                     "content": "Globalization, the interconnectedness of economies and cultures on a global scale, has reshaped the geopolitical landscape and transformed the way we live and work. From multinational corporations to cross-border trade agreements, the socioeconomic impact of globalization is profound and far-reaching. This article examines the opportunities and challenges of economic globalization, discussing its effects on income inequality, labor markets, and social welfare. Join us as we navigate the complexities of globalization and explore its implications for the future of humanity.",
                     "theme": "economics",
                     "likes": 4,
@@ -253,12 +261,27 @@ def fill_articles_db():
                     "id": str(uuid4()),
                     "author_username": users[0].username,
                     "title": "The Power of Connectivity: Social Media in the Digital Age",
-                    "date": datetime.now(),
+                    "date": date(2024,4,28),
                     "content": "Social media, the digital agora of the 21st century, has revolutionized the way we connect, communicate, and collaborate with one another. From viral memes to online activism, social media platforms have become integral to modern society, shaping public discourse and influencing cultural trends. This article delves into the dynamics of social media in the digital age, exploring its impact on identity formation, community building, and political engagement. Join us as we navigate the virtual landscapes of Facebook, Twitter, and Instagram, and examine the evolving role of social media in our lives.",
                     "theme": "social",
                     "likes": 4,
                     "dislikes": 0
-                }
+                },
+                {
+                    "id": str(uuid4()),
+                    "author_username": users[1].username,
+                    "title": "The Evolving Dynamics of Modern Politics",
+                    "date": date(2024,4,16),
+                    "content": "In the fast-paced landscape of modern politics, dynamics are constantly evolving, shaped by shifting ideologies, socio-economic factors, and technological advancements. This article delves into the multifaceted realm of political discourse, exploring key trends, challenges, and opportunities that define contemporary governance."
+                    + " At the heart of political evolution lies the interplay between traditional and emerging ideologies. From conservatism to liberalism, socialism to populism, political movements reflect society's diverse values and aspirations. Today, we witness a resurgence of nationalism and populism, fueled by economic uncertainties, cultural anxieties, and disillusionment with establishment politics. These movements challenge the status quo and amplify voices traditionally marginalized in mainstream discourse."
+                    + " Moreover, technology has revolutionized political engagement, democratizing access to information and enabling grassroots mobilization. Social media platforms serve as battlegrounds for political debate and activism, amplifying echo chambers while also fostering connections across diverse communities. However, the proliferation of misinformation and echo chambers poses challenges to informed decision-making and consensus-building, undermining the integrity of democratic processes."
+                    + " In parallel, globalization has reshaped the geopolitical landscape, blurring traditional boundaries and reshaping power dynamics. Economic interdependence, transnational threats, and global governance mechanisms highlight the interconnectedness of nations and the need for collaborative solutions to shared challenges. However, globalization also fuels tensions over trade, immigration, and cultural identity, leading to polarization and nationalist sentiments."
+                    + " Furthermore, the quest for environmental sustainability and social justice has emerged as central themes in contemporary politics. Climate change, income inequality, and racial injustice galvanize movements for systemic change, demanding policy responses that prioritize the well-being of people and the planet. Grassroots activism, civil disobedience, and political mobilization drive momentum for transformative action, challenging entrenched power structures and fostering a more inclusive political discourse."
+                    + " As we navigate the complexities of modern politics, it is crucial to uphold democratic principles, respect diverse perspectives, and engage in constructive dialogue. By fostering civic participation, promoting transparency, and holding leaders accountable, we can safeguard democratic institutions and ensure responsive governance. Ultimately, the future of politics lies in our collective ability to adapt, innovate, and collaborate in pursuit of a more just, equitable, and sustainable world.",
+                    "theme": "politics",
+                    "likes": 4,
+                    "dislikes": 0
+                },
             ]
         with Session() as session:
             for article_data in articles_data:

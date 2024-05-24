@@ -79,10 +79,10 @@ def logout_route():
     return response
 
 
-@router.get("/myprofile")
+@router.get("/my_profile")
 def current_user_route(request : Request, user: UserSchema = Depends(login_manager)):
     
-    return templates.TemplateResponse("user.html", context={"request": request,"user": user})
+    return templates.TemplateResponse("user.html", context={"request": request,"id": user.id, "username": user.username, "firstname": user.firstname, "name": user.name, "email": user.email, "interests": user.interests})
 
 
 

@@ -26,7 +26,7 @@ class Article(Base):
     author_username : Mapped[str] = mapped_column(String(72), ForeignKey("users.username"), nullable=False)
     title           : Mapped[str] = mapped_column(String(72))
     date                          = Column(Date)
-    content         : Mapped[str] = mapped_column(String(1024))
+    content         : Mapped[str] = mapped_column(String(2048))
     theme           : Mapped[str] = mapped_column(String(72))
     likes           : Mapped[int] = mapped_column(Integer, default=0)
     dislikes        : Mapped[int] = mapped_column(Integer, default=0)

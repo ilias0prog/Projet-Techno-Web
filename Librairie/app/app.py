@@ -23,15 +23,16 @@ app.mount("/static", StaticFiles(directory="Librairie/static"), name="static")
 
 @app.on_event('startup')
 def on_startup():
-    print("Server started.")
-    # delete_database()
     create_database()
-    fill_users_db()   
+    fill_users_db()
     fill_articles_db()
     fill_comments_db()
+    # delete_database()
+    print("Server started.")
+
     
 
-
+@app.on_event('shutdown')
 def on_shutdown():
+    delete_database()
     print("Bye bye!")
-    clear_database()
