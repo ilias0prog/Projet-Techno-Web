@@ -10,8 +10,6 @@
         <i class='bx bx-health' id="card-logo"></i>
         {% elif theme == "music"%}
         <i class='bx bxs-music' id="card-logo"></i>
-        {% elif theme == "culture"%}
-        <i class='bx bxs-arch' id="card-logo"></i>
         {% elif theme == "cinema"%}
         <i class='bx bx-film' id="card-logo"></i>
         {% elif theme == "politics"%}
@@ -30,16 +28,21 @@
     <h1 class="card-title">{{ title }}</h1>
     <p class="card-article">"{{ content }}"</p>
 
-    <!-- <button class="like_button">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
-    <button class="dislike_button">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button> -->
+        <!-- <button class="like_button">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
+        <button class="dislike_button">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button> -->
 
-    <!-- <button class="like_button" onclick="toggleCheckbox('like_checkbox')">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
-<input type="checkbox" class="like_checkbox" style="display: none">
+        <!-- <button class="like_button" onclick="toggleCheckbox('like_checkbox')">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
+    <input type="checkbox" class="like_checkbox" style="display: none">
 
-<button class="dislike_button" onclick="toggleCheckbox('dislike_checkbox')">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button>
-<input type="checkbox" class="dislike_checkbox" style="display: none"> -->
+    <button class="dislike_button" onclick="toggleCheckbox('dislike_checkbox')">{{ dislikes }} <i class='bx bx-dislike' id="like-button-icon"></i></button>
+    <input type="checkbox" class="dislike_checkbox" style="display: none"> -->
 
+    <a class="my-articles-buttons" id="edit" href="/articles/edit/{{ article_id }}"><i class='bx bxs-edit' id="my_articles_edit_button"></i></a>
 
+    <a class="my-articles-buttons" id="delete" href="#" onclick="confirmDelete(event, '{{ article_id }}')">
+        <i class='bx bx-eraser' id="my_articles_delete_button"></i>
+    </a>
+    
     <button class="like_button" onclick="toggleCheckbox('like_checkbox')">
         <input type="checkbox" class="like_checkbox">
         <i class='bx bx-like' id="like-button-icon"></i>
@@ -50,6 +53,9 @@
         <i class='bx bx-dislike' id="dislike-button-icon"></i>
     </button>
 
+    
+
+
     <!-- <button class="like_button" id="like_button_{{ article_id }}" data-article-id="{{ article_id }}">{{ likes }} <i class='bx bx-like' id="like-button-icon"></i></button>
     <span class="like_count" id="like_count_{{ article_id }}">{{ likes }}</span>
 
@@ -57,26 +63,25 @@
     <span class="dislike_count" id="dislike_count_{{ article_id }}">{{ dislikes }}</span> -->
 
 
-<button class="comment-toggle-btn" onclick="toggleComments( article_id )"><i class='bx bx-comment'></i></button>
-
-<div class="comments-container" id="comments-container-{{ article_id }}">
-    {% for comment in article_comments %}
-        <div class="comment">
-            <p><strong>{{ comment.author_id }}</strong></p>
-            <p>{{ comment.content }}</p>
-        </div>
-    {% endfor %}
+    <button class="comment-toggle-btn" onclick="toggleComments('{{ article_id }}')"><i class='bx bx-comment'></i> </button>
+    <div id="comments-container-{{ article_id }}" class="comments-container">
+        {% for comment in article_comments %}
+            <div class="comment">
+                <p><strong>{{ comment.author_id }}</strong></p>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% endfor %}
 
     <!-- <button class="comment-form-toggle-btn" onclick="toggleCommentForm( article_id )">Write a Comment</button> -->
 
-    <div class="comment-form-container" id="comment-form-{{ article_id }}" style="display: none;">
-        <form method="post" action="/post_comment" onsubmit="postComment(event, {{ article_id }})">
+    <div class="comment-form-container" id="comment-form-{{ article_id }}">
+        <form method="post" action="/post_comment" onsubmit="postComment(event, '{{ article_id }}')">
             <textarea name="comment" placeholder="Write your comment" required></textarea>
             <input type="hidden" name="article_id" value="{{ article_id }}">
             <button type="submit"><i class='bx bx-send'></i> Post</button>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
 </div>
 {% endmacro %}
@@ -118,3 +123,14 @@
         </td>
     </tbody>
 {% endmacro %}
+
+<script>
+    // Confirm delete message :
+function confirmDelete(event, articleId) {
+    event.preventDefault();
+    if (confirm('Are you sure you want to delete this article?')) {
+        document.getElementById('delete-form-' + articleId).submit();
+    }
+}
+
+</script>

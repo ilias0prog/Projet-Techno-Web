@@ -48,14 +48,17 @@ def get_feed(request : Request, filter : str, data :str,  user: UserSchema = Dep
     else:
         themes = user.interests.split(' ')
         articles = service.get_all_articles_by_themes(themes)
+
+    articles = [article for article in articles if article.author_username != user.username] 
+
     comments = {}
     for article in articles:
         comments[article.id] = get_comments_by_article(article.id)
 
     return templates.TemplateResponse("/homepage.html", context = {"request" : request, "articles" : articles, "user" : user, "comments" : comments})
 
-@router.post("/load_comments")
-async def load_comments(article_id: int):
+@router.post("/load_comments/{article_id}")
+async def load_comments(article_id: str):
     comments = get_comments_by_article(article_id)
     return {"comments": comments}
 
@@ -93,10 +96,10 @@ def edit_article( article_id: str, title: str = Form(...), content: str = Form(.
     service.update_article(article_id, title, content)
     return RedirectResponse(url="/articles/my_articles", status_code=302)
 
-@router.get("/delete/{article_id}")
-def delete_article(request : Request, article_id: str, user: UserSchema = Depends(login_manager)):
-    service.delete_article(article_id)
-    return templates.TemplateResponse("/delete_article.html", context = {"request" : request, "article_id" : article_id, "user" : user})
+# @router.get("/delete/{article_id}")
+# def delete_article(request : Request, article_id: str, user: UserSchema = Depends(login_manager)):
+#     service.delete_article(article_id)
+#     return templates.TemplateResponse("/delete_article.html", context = {"request" : request, "article_id" : article_id, "user" : user})
 
 @router.post("/delete/{article_id}")
 def delete_article( article_id: str, user: UserSchema = Depends(login_manager)):
@@ -110,7 +113,7 @@ def get_my_articles(request : Request, user: UserSchema = Depends(login_manager)
    
     def compare_by_date(article : Article):
         # Convertir la date de l'article en objet datetime pour la comparaison
-        article_date = datetime.strptime(article.date, "%Y:%m:%d")
+        article_date = article.date
         return article_date
 
     # Trier les articles par date dans l'ordre descendant en utilisant la fonction de comparaison

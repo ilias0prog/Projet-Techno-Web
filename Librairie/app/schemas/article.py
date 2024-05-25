@@ -10,5 +10,4 @@ class ArticleSchema(BaseModel):
     date :              Date
     content :           str
     theme :             str
-    likes :             int
-    dislikes :          int
+ 

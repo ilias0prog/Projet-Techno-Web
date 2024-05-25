@@ -43,7 +43,7 @@ def fill_users_db():
         "email": "john.doe@example.com",
         "password": "password123",
         "admin": True,
-        "interests" : "sport technology culture health cinema music politics environment international economics",
+        "interests" : "sport technology health cinema music politics environment international economics",
     },
     {
         "id": str(uuid4()),
@@ -83,7 +83,7 @@ def fill_users_db():
         "email": "michael.taylor@example.com",
         "password": "passworddef",
         "admin": False,
-        "interests" : "sport culture social",
+        "interests" : "sport social",
     },
     {
         "id": str(uuid4()),
@@ -103,7 +103,7 @@ def fill_users_db():
         "email": "david.anderson@example.com",
         "password": "passwordjkl",
         "admin": True,
-       "interests" : "economics culture cinema",
+       "interests" : "economics cinema",
     },
     {
         "id": str(uuid4()),
@@ -176,14 +176,14 @@ def fill_articles_db():
                 {
                     "id" : str(uuid4),
                     "author_username": users[1].username,
-                    "title": "Exploring Cultural Diversity in the Modern World",
+                    "title": "The Critical Role of Mental Health in Overall Well-being",
                     "date": date(2024,4,29),
-                    "content": "Culture, as a dynamic and multifaceted concept, shapes our identities, beliefs, and interactions in profound ways. From traditional customs to contemporary art forms, culture reflects the collective experiences and expressions of a society. This article delves into the rich tapestry of cultural diversity, exploring how globalization, migration, and technology influence cultural exchange and adaptation. Through a lens of anthropology and sociology, we unravel the complexities of culture and its enduring impact on human civilization."
-                    + " Culture is not static but rather constantly evolving, shaped by historical events, social interactions, and external influences. Globalization, with its interconnectedness and ease of communication, has facilitated the exchange of ideas, beliefs, and practices across borders. This has led to a blending of cultures and the emergence of hybrid identities, challenging traditional notions of cultural purity and authenticity. Additionally, migration plays a significant role in cultural diffusion, as people bring their customs and traditions to new environments, enriching local cultures while also facing challenges of assimilation and cultural preservation."
-                    + " Technology, particularly the internet and social media, has further accelerated the pace of cultural exchange and interaction. Platforms like YouTube, Instagram, and TikTok allow individuals to share their cultural expressions with a global audience, breaking down geographical barriers and fostering cross-cultural understanding. However, the digital age also presents challenges, such as the spread of misinformation and the homogenization of culture through mass media and commercialization."
-                    + "Anthropologists and sociologists study culture from various perspectives, seeking to understand its underlying dynamics and significance in human societies. They explore topics such as cultural relativism, ethnocentrism, and cultural hegemony, shedding light on power dynamics and inequalities within and between cultures. By critically examining cultural practices and beliefs, researchers contribute to a deeper understanding of human diversity and the complexities of cultural identity."
-                    + " In conclusion, culture is a multifaceted and dynamic phenomenon that shapes our lives in profound ways. As globalization, migration, and technology continue to reshape the cultural landscape, it is essential to recognize and celebrate the diversity of human expression while also engaging in meaningful dialogue and mutual respect across cultural boundaries. By embracing cultural diversity and fostering intercultural understanding, we can build a more inclusive and harmonious global community.",
-                    "theme": "culture",
+                    "content": "In recent years, the focus on mental health has increased significantly, shedding light on its essential role in overall well-being. Mental health, often misunderstood and stigmatized, is now recognized as crucial to our physical health, social interactions, and productivity. As society becomes more aware of the importance of mental health, it's essential to understand its impact and the measures we can take to nurture it."
+                    + " At its core, mental health encompasses our emotional, psychological, and social well-being. It influences how we think, feel, and behave in various situations, as well as how we navigate relationships, cope with stress, and make decisions. A positive state of mental health is characterized by resilience, self-awareness, and the ability to maintain a sense of balance and perspective amidst life's challenges."
+                    + " Furthermore, the stigma surrounding mental illness often exacerbates the challenges faced by individuals seeking help and support. Misconceptions, discrimination, and societal attitudes towards mental health can deter individuals from seeking timely interventions and accessing appropriate treatment and care. As a result, many individuals suffer in silence, grappling with their mental health issues without the necessary support systems in place."
+                    + " Social interactions and relationships are deeply affected by mental health. Poor mental health can lead to isolation, strained relationships, and difficulty in maintaining social connections. Healthy relationships, in turn, are essential for mental well-being, providing support, companionship, and a sense of belonging. Encouraging open conversations about mental health can help reduce stigma, making it easier for individuals to seek help and support from friends and family."
+                    + " In conclusion, mental health is integral to overall well-being and must be prioritized in our efforts to promote health and wellness for all. By fostering awareness, reducing stigma, and investing in mental health services and support systems, we can create a more compassionate and supportive society where individuals can thrive mentally, emotionally, and socially. Let us recognize the critical role of mental health in shaping our collective well-being and commit to building a healthier, more resilient future for generations to come.",
+                    "theme": "health",
                     "likes": 5,
                     "dislikes": 0
                 },

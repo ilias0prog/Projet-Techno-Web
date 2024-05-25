@@ -1,11 +1,12 @@
 {% block content %}
 <head>
-    <link rel="stylesheet" href="/static/main_style.css">
+    <link rel="stylesheet" href="../static/main_style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body class="my-profile-page">
 
-    <!-- <header class="header">
+    <header class="header">
         <a href="#" class="logo">WeShare</a>
     
         <input type="checkbox" id="check">
@@ -52,49 +53,95 @@
             <a href="/articles/my_articles" style="--i:3;">My articles</a>
             <a href="/users/my_profile" style="--i:4;">My Profile</a>
         </nav>
-    </header> -->
+    </header>
 
     <h1 class="my-profile-header" >Your profile</h1>
-    <!-- <div class="user-form-group">
-        <label class="edit_article_label" id="edit_article_label_name" for="user_name">Name</label>
-        <input type="text" class="form-control" id="edit_user_name"
-               name="name" placeholder="{{name}}" value="{{name}}"/>
-    </div>
-
-    <div class="user-form-group">
-        <label class="edit_article_label" id="edit_article_label_firstname" for="user_firstname">First Name</label>
-        <input type="text" class="form-control" id="edit_user_firstname"
-               name="firstname" placeholder="{{firstname}}" value="{{firstname}}"/>
-    </div>
-
-    <div class="user-form-group">
-        <label class="edit_article_label" id="edit_article_label_username" for="user_username">Username</label>
-        <input type="text" class="form-control" id="edit_user_username"
-               name="username" placeholder="{{username}}" value="{{username}}"/>
-    </div>
-
-    <div class="user-form-group">
-        <label class="edit_article_label" id="edit_article_label_email" for="user_email">Email</label>
-        <input type="email" class="form-control" id="edit_user_email"
-               name="email" placeholder="{{email}}" value="{{email}}"/>
-    </div>
-    
-    <div class="user-form-group">
-        <label class="edit_article_label" id="edit_article_label_interests" for="user_interests">Interests</label>
-        <input type="text" class="form-control" id="edit_user_interests"
-               name="interests" placeholder="{{Interests}}" value="{{interests}}"/>
-    </div> -->
 
     <div class="profile-container">
-        <div class="username-container">Your username : {{username}}</div>
+        <div class="data-container" id="username-container">
+            <div class="data-label" id="username-label">Username :</div>
+            <div class="data" id="username">{{username}}</div>
+        </div>
+        <div class="data-container" id="secondname-container">
+            <div class="data-label" id="secondname-container">Second name :</div>
+            <div class="data" id="secondname">{{name}}</div>
+        </div>
+        <div class="data-container" id="firstname-container">
+            <div class="data-label" id="firstname-label">First name :</div>
+            <div class="data" id="username">{{firstname}}</div>
+        </div>
+        <div class="data-container" id="email-container">
+            <div class="data-label" id="email-label">Email :</div>
+            <div class="data" id="label">{{email}}</div>
+        </div>
+        
+        <button class="edit-password-button">
+            Change your password
+        </button>
+
+        <div class="interests-container">
+        {% for interest in interests %}
+        <div class="data-container" id="interest-container">
+            <div class="data" id="interest">{{interest}}</div>
+        </div>
+        {% endfor %}
     </div>
+    <a class="my-profile-buttons" id="edit_user_button">Edit  </a>
+    <a href="/users/logout" class="my-profile-buttons" id="logout_button">Logout</a>
 
+
+    <script>
+        // Search menu part :
+
+    function toggleSearchOption(option) {
+    document.getElementById('search-theme').style.display = option === 'theme' ? 'block' : 'none';
+    document.getElementById('search-date').style.display = option === 'date' ? 'block' : 'none';
+}
+
+function performSearch() {
+    const selectedOption = document.querySelector('input[name="search-option"]:checked').value;
+    if (selectedOption === 'theme') {
+        const theme = document.getElementById('search-article-theme').value;
+        if (theme) {
+            window.location.href = `/articles/homepage/search_theme/${theme}`;
+        } else {
+            alert('Please select a theme.');
+        }
+    } else if (selectedOption === 'date') {
+        const date = document.getElementById('search-article-date').value;
+        if (date) {
+            window.location.href = `/articles/homepage/search_date/${date}`;
+        } else {
+            alert('Please select a date.');
+        }
+    } else {
+        alert('Please select a search option.');
+    }
+}
+
+    // Password part : 
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const changePasswordButton = document.querySelector(".edit-password-button");
+        const changePasswordForm = document.getElementById("change-password-form");
+
+        changePasswordButton.addEventListener("click", function() {
+            if (changePasswordForm.style.display === "none") {
+                changePasswordForm.style.display = "block";
+            } else {
+                changePasswordForm.style.display = "none";
+            }
+        });
+    });
+
+    document.addEventListener("click", function() {
+        const changePasswordButton = document.querySelector(".edit-password-button");
+        const changePasswordForm = document.getElementById("change-password-form"); 
+    
+        changePasswordButton.addEventListener()
+    } )
+    
+    </script>
 </body>
-
-    <button class="btn btn-primary" id="edit_user_button">Edit</button>
-    <button class="btn btn-primary" id="delete_user_button">Delete</button>
-    <button class="btn btn-primary" id="logout_button">Logout</button>
-
-   
 
 {% endblock %}

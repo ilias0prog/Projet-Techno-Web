@@ -359,7 +359,7 @@ body {
     margin-top: 50px;
     padding: 30px;
     padding-top: 50px;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
     width: 60vw;
     min-width: 420px;
     /* height: 50%; */
@@ -542,7 +542,7 @@ body {
 }
 
 .comment-toggle-btn {
-    margin-top: 10px;
+    /* margin-top: 10px;
     margin-left: 95%;
     padding: 10px;
     background: none;
@@ -553,28 +553,44 @@ body {
     cursor: pointer;
 
     transition: all ease-out .3s;
-    box-shadow: .1rem .15rem .2rem rgba(0, 0, 0, .1);
+    box-shadow: .1rem .15rem .2rem rgba(0, 0, 0, .1); */
+
+    position: absolute;
+    background-color:#fffff8;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    bottom: 30px;
+    right: 10%;
+    cursor: pointer;
+
+    border: none;
+    border-radius: 12px;
+
+    box-shadow: 1rem 2rem 4rem rgba(0, 0, 0, .4);
 }
 
 .comment-toggle-btn:hover {
-    box-shadow: .1rem .2rem .4rem rgba(0, 0, 0, .2);
+    box-shadow: .1rem 2rem 4rem rgba(0, 0, 0, .5);
 } 
 
 .comment-toggle-btn:active {
-    box-shadow: .2rem .4rem .8rem rgba(0, 0, 0, .25);
+    background-color: rgba(255, 255, 248, .4);
 } 
 
 .comments-container {
-    display: block;
-    overflow: hidden;
+    /* display: none; */
     transition: max-height 0.5s ease-out;
     max-height: 0;
 }
-
+/* 
 .comments-container.show {
     display: block;
-    max-height: 1000px; /* Ajustez cette valeur en fonction de la taille de vos commentaires */
-}
+    max-height: 1000px; 
+} */
 
 
 .comment-form-container {
@@ -700,6 +716,8 @@ body.my-profile-page{
     display: flex;
     justify-content: center;
     align-items: center;
+
+    height: 100vh;
 }
 
 .my-profile-header{
@@ -717,9 +735,9 @@ body.my-profile-page{
     left: 35vw;
     right: auto;
     width: 30vw;
-    height: 60vh;
+    height: 65vh;
     min-width: 500px;
-    padding: 20px;
+    padding: 50px;
     padding-bottom: 50px;
     /* height: 100vh; */
     display: flex;
@@ -729,14 +747,168 @@ body.my-profile-page{
     border: none;
     backdrop-filter: blur(25px);
     box-shadow: .1rem .5rem 1rem rgba(0, 0, 0, .3);
+    background-image: linear-gradient(to bottom,#fffff8, #4d6e7e); 
 }
 
-.username-container{
-    background-color: #4d6e7e;
+.data-container, .edit-password-button{
+    display: flex;
+    align-items: baseline;
 
-    border-radius: 15px;
+    height: 40px;
+
+    background-color: rgba(255, 255, 248, .6);
+
+    border-radius: 6px;
     border: none;  
-    padding: 5px;
 
-    box-shadow: .1rem .5rem 1rem rgba(0, 0, 0, .3);
+    padding: 5px;
+    margin-bottom: 50px;
+
+    box-shadow: .1rem 2rem 4rem rgba(0, 0, 0, .2);
+}
+
+.data-container {
+    padding-right: 20px;
+}
+
+.edit-password-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+
+    border-radius: 4px;
+
+    font-size: 1.1em;
+    font-weight: 300;
+
+    transition: all ease .3s;
+    transition: background-color ease-in-out .1s;
+    text-decoration: none;
+    color: #000;
+    background-color: rgba(255, 255, 248, .7);
+
+    box-shadow: 2rem 4rem 8rem rgba(0, 0, 0, .4);
+
+}
+
+.edit-password-button:hover {
+    box-shadow: .1rem 2rem 4rem rgba(0, 0, 0, .2);
+
+    /* transform: translateY(-2px); */
+}
+
+.edit-password-button:active {
+    background-color: rgba(255, 255, 248, .4);
+}
+
+.data-label {
+    display: inline-block;
+    font-size: 1.2rem;
+    margin-right: auto;
+    font-weight: 300;
+}
+
+.data {
+    position: relative;
+    float: right;
+    display: inline-block;
+    margin-left: auto;
+
+    font-weight: 300;
+}
+
+.interests-container {
+    height: 800px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    grid-column-gap: 10px;
+    grid-row-gap: 20px;
+}
+
+
+#interest-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    padding-right: 5px;
+}
+
+#interest {
+    margin-left: 0;
+}
+
+.my-profile-buttons {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 30px;
+    margin-top: 20px;
+
+    border-radius: 6px;
+
+    font-size: 1.1em;
+    font-weight: 300;
+
+    transition: all ease .3s;
+    transition: background-color ease-in-out .1s;
+    text-decoration: none;
+    color: #000;
+    background-color: rgba(255, 255, 248, .7);
+
+    box-shadow: 1rem 2rem 4rem rgba(0, 0, 0, .2);
+}
+
+.my-profile-buttons:hover {
+    box-shadow: .1rem 2rem 4rem rgba(0, 0, 0, .5);
+}
+
+.my-profile-buttons:active {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.my-articles-buttons {
+
+}
+
+#my_articles_edit_button {
+    position: absolute;
+    background-color:#fffff8;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    bottom: 30px;
+    left: 80px;
+
+    border: none;
+    border-radius: 12px;
+
+    box-shadow: 1rem 2rem 4rem rgba(0, 0, 0, .4);
+}
+
+#my_articles_delete_button {
+    position: absolute;
+    background-color:#fffff8;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    bottom: 30px;
+    left: 160px;
+
+    border: none;
+    border-radius: 12px;
+
+    box-shadow: 1rem 2rem 4rem rgba(0, 0, 0, .4);
 }

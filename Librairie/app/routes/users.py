@@ -82,7 +82,7 @@ def logout_route():
 @router.get("/my_profile")
 def current_user_route(request : Request, user: UserSchema = Depends(login_manager)):
     
-    return templates.TemplateResponse("user.html", context={"request": request,"id": user.id, "username": user.username, "firstname": user.firstname, "name": user.name, "email": user.email, "interests": user.interests})
+    return templates.TemplateResponse("user.html", context={"request": request,"id": user.id, "username": user.username, "firstname": user.firstname, "name": user.name, "email": user.email, "interests" : user.interests.split(' ')})
 
 
 
@@ -128,3 +128,7 @@ def delete_action(id: Annotated[str, Form()]):
     service.delete_user(id)
     response = RedirectResponse(url="/users/myprofile", status_code=302)
     return response
+
+@router.get("/edit-password")
+def edit_password(request : Request ,user: UserSchema = Depends(login_manager)):
+    return templates.TemplateResponse("/edit-password.html", context={"request": request, "user": user})

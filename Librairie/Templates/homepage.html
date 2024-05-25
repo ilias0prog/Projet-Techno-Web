@@ -36,7 +36,6 @@
                 <select name="theme" id="search-article-theme">
                     <option value="" disabled selected>Choose a theme</option>
                     <option value="sport">Sport</option>
-                    <option value="culture">Culture</option>
                     <option value="music">Music</option>
                     <option value="cinema">Cinema</option>
                     <option value="politics">Politics</option>
@@ -271,14 +270,108 @@ function toggleLikeButton(event) {
 
 
 
+// Confirm delete message :
+function confirmDelete(event, articleId) {
+    console.log(articleId)
+    event.preventDefault();
+    if (confirm('Are you sure you want to delete this article?')) {
+        window.location.href = '/articles/delete/' + articleId;
+    }
+}
 
 
 
 
 // Commentaires Ryan
+function toggleCommentForm(articleId) {
+    var commentForm = document.getElementById('comment-form-' + articleId);
+}
+
+// function loadComments(articleId) {
+//     // fetch(`/articles/homepage/user_themes/data`)
+//     fetch('/articles/load_comments/' + articleId, {
+//         method: 'POST'
+//     })
+//     .then(response => response.text())
+//     .then(html => {
+//         const commentsContainer = document.getElementById('comments-container-' + articleId);
+//         if (commentsContainer) {
+//             commentsContainer.innerHTML = html;
+//         } else {
+//             console.error(`Comments container with id comments-container-${articleId} not found`);
+//         }
+//     })
+//     .catch(error => console.error('Error loading comments:', error));
+// }
+
+function loadComments(articleId) {
+    fetch('/articles/load_comments/' + articleId, {
+        method: 'POST'
+    })
+    .then(response => response.json()) // Parse la réponse JSON
+    .then(data => {
+        // Récupère le conteneur des commentaires
+        const commentsContainer = document.getElementById('comments-container-' + articleId);
+        
+        // Vérifie si le conteneur existe et si des commentaires ont été retournés
+        
+            // Crée une chaîne HTML pour afficher les commentaires
+            const html = data.comments.map(comment => {
+                return `<div class="comment">
+                            <p><strong>${comment.author_id}</strong></p>
+                            <p>${comment.content}</p>
+                        </div>`;
+            }).join(''); // Convertit le tableau de commentaires en une seule chaîne HTML
+            
+            // Met à jour le contenu du conteneur des commentaires avec la chaîne HTML
+            commentsContainer.innerHTML = html;
+    })
+    .catch(error => console.error('Error loading comments:', error));
+}
 
 
-    
+
+function postComment(event, articleId) {
+    event.preventDefault(); // Empêche le formulaire de se soumettre normalement
+
+    // Récupérez le contenu du commentaire à partir du formulaire
+    var commentContent = document.querySelector('#comment-form-' + articleId + ' textarea').value;
+
+    // Faites une requête AJAX pour poster le commentaire
+    fetch('/post_comment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            article_id: articleId,
+            comment: commentContent
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            // Si le commentaire est posté avec succès, chargez à nouveau les commentaires de l'article
+            loadComments(articleId);
+            // Effacez le contenu du champ de commentaire après l'avoir posté
+            document.querySelector('#comment-form-' + articleId + ' textarea').value = '';
+        } else {
+            console.error('Failed to post comment');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function toggleComments(articleId) {
+    var commentsContainer = document.getElementById('comments-container-' + articleId);
+    if (commentsContainer.style.display === 'none') {
+        commentsContainer.style.display = 'block';
+    }else {
+        commentsContainer.style.display = 'none';
+    }
+    loadComments(articleId);
+    } 
     </script>
 </body>
 

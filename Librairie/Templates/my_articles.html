@@ -37,7 +37,6 @@
                     <select name="theme" id="search-article-theme">
                         <option value="" disabled selected>Choose a theme</option>
                         <option value="sport">Sport</option>
-                        <option value="culture">Culture</option>
                         <option value="music">Music</option>
                         <option value="cinema">Cinema</option>
                         <option value="politics">Politics</option>
@@ -63,14 +62,6 @@
 
     <div class="feed-container">
         {% for article in articles %}
-        <td>
-            <a class="btn btn-outline-dark mx-2" href="/articles/edit/{{ article.id }}"><i class='bx bxs-edit' id="edit_button"></i></a>
-        </td>
-
-        <td>
-            <a class="btn btn-outline-dark mx-2" href="/article/delete/{{ article.id }}"><i class='bx bx-eraser' id="delete_button"></i></a>
-
-        </td>
         {{ show_article(article.id, article.author_username, article.title, article.date, article.content, article.theme, article.likes, article.dislikes, article, comments) }}
         {% endfor %}
     </div>

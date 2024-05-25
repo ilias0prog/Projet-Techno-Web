@@ -34,7 +34,7 @@ class Article(Base):
     author = relationship("User", back_populates="articles")
     comments: Mapped[List["Comment"]] = relationship( "Comment", back_populates="article")
     __table_args__ = (
-        CheckConstraint('theme IN ("sport", "culture", "music", "cinema", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),
+        CheckConstraint('theme IN ("sport", "music", "cinema", "politics", "economics", "health", "environment", "social", "technology", "international")', name='check_theme'),
         CheckConstraint('likes >= 0' , name='check_like_range'),
         CheckConstraint('dislikes >= 0' , name='check_dislike_range'),
     )
