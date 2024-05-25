@@ -114,7 +114,7 @@ def update_form(request: Request, user: UserSchema):
     return templates.TemplateResponse("/updateprofile.html", context={"request": request, "user": user})
 
 @router.post("/updateprofile/{user.id}")
-def update_action(id: Annotated[str, Form()], username: Annotated[str, Form()], firstname: Annotated[str, Form()], name: Annotated[str, Form()], email: Annotated[str, Form()], password: Annotated[str, Form()], interests: Annotated[str, Form()]):
+def update_action(id: str, username: Annotated[str, Form()], firstname: Annotated[str, Form()], name: Annotated[str, Form()], email: Annotated[str, Form()], password: Annotated[str, Form()], interests: Annotated[str, Form()]):
     service.update_user(id, username, firstname, name, email, password, interests)
     response = RedirectResponse(url="/users/myprofile", status_code=302)
     return response

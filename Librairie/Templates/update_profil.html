@@ -1,0 +1,160 @@
+<head>
+    <link rel="stylesheet" href="../static/main_style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body class="my-profile-page">
+
+    <header class="header">
+        <a href="#" class="logo">WeShare</a>
+    
+        <input type="checkbox" id="check">
+    
+        <label for="check" class="icons">
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <i class='bx bx-x' id="close-icon"></i>
+        </label>
+    
+        <nav class="navbar">
+            <a href="/articles/homepage/user_themes/data" style="--i:0;">Home</a>
+            
+            <a href="#" id="search-toggle" style="--i:1;">Search <i class='bx bx-search'></i></a>
+            <div id="search-menu" class="search-menu" style="display: none;">
+                <label>
+                    <input class="navbar-search-option" type="radio" name="search-option" value="theme" onclick="toggleSearchOption('theme')"> By Theme
+                </label>
+                <label> 
+                    <input class="navbar-search-option" type="radio" name="search-option" value="date" onclick="toggleSearchOption('date')"> By Date
+                </label>
+                <div id="search-theme" style="display: none;">
+                    <select name="theme" id="search-article-theme">
+                        <option value="" disabled selected>Choose a theme</option>
+                        <option value="sport">Sport</option>
+                        <option value="culture">Culture</option>
+                        <option value="music">Music</option>
+                        <option value="cinema">Cinema</option>
+                        <option value="politics">Politics</option>
+                        <option value="economics">Economics</option>
+                        <option value="health">Health</option>
+                        <option value="environment">Environment</option>
+                        <option value="social">Social</option>
+                        <option value="technology">Technology</option>
+                        <option value="international">International</option>
+                    </select>
+                </div>
+                <div id="search-date" style="display: none;">
+                    <input type="date" id="search-article-date">
+                </div>
+                <button id="search-button" onclick="performSearch()"><i class='bx bx-search'></i></button>
+            </div>
+    
+            <a href="/articles/create" style="--i:2;">I Share</a>
+            <a href="/articles/my_articles" style="--i:3;">My articles</a>
+            <a href="/users/my_profile" style="--i:4;">My Profile</a>
+        </nav>
+    </header>
+
+
+
+    <h1 class="my-profile-header" >Your profile</h1>
+
+    <form class="edit-profile-form" action="/updateprofile/{user.id}" method="post">
+    
+        <div class="data-container" id="username-container">
+            <label class="edit_profile_label" id="edit_profile_label_username" for="profile_username">username</label>
+            <input type="text" class="form-control" id="edit_profile_username"
+                   name="username" placeholder="{{username}}" value="{{username}}"/>
+        </div>
+    
+        <div class="data-container" id="firstname-container">
+            <label class="edit_profile_label" id="edit_profile_label_firstname" for="profile_firstname">firstname</label>
+            <input type="text" class="form-control" id="edit_profile_firstname"
+                   name="firstname" placeholder="{{firstname}}" value="{{firstname}}"/>
+        </div>
+
+        <div class="data-container" id="secondname-container">
+            <label class="edit_profile_label" id="edit_profile_label_name" for="profile_name">name</label>
+            <input type="text" class="form-control" id="edit_profile_name"
+                   name="name" placeholder="{{name}}" value="{{name}}"/>
+        </div>
+
+        <div class="data-container" id="email-container">
+            <label class="edit_profile_label" id="edit_profile_label_email" for="profile_email">email</label>
+            <input type="text" class="form-control" id="edit_profile_email"
+                   name="email" placeholder="{{email}}" value="{{email}}"/>
+        </div>
+
+    <!--
+            <div class="edit-profile-form-groupe">
+            <label class="edit_profile_label" id="edit_profile_label_password" for="profile_password">password</label>
+            <input type="text" class="form-control" id="edit_profile_password"
+                   name="password" placeholder="{{password}}" value="{{password}}"/>
+        </div>
+    -->
+
+        <div class="interests-container">
+            <label class="edit_profile_label" id="edit_profile_label_interests" for="profile_interests">interests</label>
+            <input type="text" class="form-control" id="edit_profile_interests"
+                   name="interests" placeholder="{{interests}}" value="{{interests}}"/>
+        </div>
+        
+        <button type="submit" class="edit-profile-button" id="confirm_edit_button" href="/users/my_profile"><i class='bx bx-check' id="edit-profile-button-icon"></i></button>
+    
+    </form>
+
+
+    <script>
+        // Search menu part :
+
+    function toggleSearchOption(option) {
+    document.getElementById('search-theme').style.display = option === 'theme' ? 'block' : 'none';
+    document.getElementById('search-date').style.display = option === 'date' ? 'block' : 'none';
+}
+
+function performSearch() {
+    const selectedOption = document.querySelector('input[name="search-option"]:checked').value;
+    if (selectedOption === 'theme') {
+        const theme = document.getElementById('search-article-theme').value;
+        if (theme) {
+            window.location.href = `/articles/homepage/search_theme/${theme}`;
+        } else {
+            alert('Please select a theme.');
+        }
+    } else if (selectedOption === 'date') {
+        const date = document.getElementById('search-article-date').value;
+        if (date) {
+            window.location.href = `/articles/homepage/search_date/${date}`;
+        } else {
+            alert('Please select a date.');
+        }
+    } else {
+        alert('Please select a search option.');
+    }
+}
+
+    // Password part : 
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const changePasswordButton = document.querySelector(".edit-password-button");
+        const changePasswordForm = document.getElementById("change-password-form");
+
+        changePasswordButton.addEventListener("click", function() {
+            if (changePasswordForm.style.display === "none") {
+                changePasswordForm.style.display = "block";
+            } else {
+                changePasswordForm.style.display = "none";
+            }
+        });
+    });
+
+    document.addEventListener("click", function() {
+        const changePasswordButton = document.querySelector(".edit-password-button");
+        const changePasswordForm = document.getElementById("change-password-form"); 
+    
+        changePasswordButton.addEventListener()
+    } )
+    
+    </script>
+</body>
+
+{% endblock %}
