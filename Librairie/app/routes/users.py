@@ -38,7 +38,7 @@ def login_route( username: Annotated[str, Form()], password: Annotated[str,Form(
         )
         return response
 """
-# ChatGPT version : 
+
 
 @router.post("/login")
 def login_route( username: Annotated[str, Form()], password: Annotated[str,Form()]):
@@ -109,13 +109,14 @@ def admin_action(id: Annotated[str, Form()]):
     response = RedirectResponse(url="/users/admin", status_code=302)
     return response
 
-@router.get("/updateprofile/{user.id}")
-def update_form(request: Request, user: UserSchema):
+@router.get("/updateprofile/{user_id}")
+def update_form(user_id : str, request: Request, user: UserSchema = Depends(login_manager)):
+    user = get_user_by_id(user_id)
     return templates.TemplateResponse("/updateprofile.html", context={"request": request, "user": user})
 
-@router.post("/updateprofile/{user.id}")
-def update_action(id: str, username: Annotated[str, Form()], firstname: Annotated[str, Form()], name: Annotated[str, Form()], email: Annotated[str, Form()], password: Annotated[str, Form()], interests: Annotated[str, Form()]):
-    service.update_user(id, username, firstname, name, email, password, interests)
+@router.post("/updateprofile/{user_id}")
+def update_action(user_id: str, username: Annotated[str, Form()], firstname: Annotated[str, Form()], name: Annotated[str, Form()], email: Annotated[str, Form()], password: Annotated[str, Form()], interests: Annotated[str, Form()]):
+    service.update_user(user_id, username, firstname, name, email, password, interests)
     response = RedirectResponse(url="/users/myprofile", status_code=302)
     return response
 
